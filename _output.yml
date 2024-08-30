@@ -3,10 +3,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">A GitBook for Teaching</a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/cjvanlissa/gitbook-demo/edit/master/%s
+        <li><a href="https://github.com/IhnwhiHeo/PSY202A_Modeling/">PSY202A Statistical Modeling</a></li>
     download: ["pdf"]
 bookdown::pdf_book:
   includes:

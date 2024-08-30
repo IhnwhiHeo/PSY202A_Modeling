@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>[PSY202A] Statistical Modeling in Psychological Sciences</title>
+  <title>Chapter 4 Summarizing Data | [PSY202A] Statistical Modeling in Psychological Sciences</title>
   <meta name="description" content="This GitBook is for guest lectures in PSY202A." />
   <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="[PSY202A] Statistical Modeling in Psychological Sciences" />
+  <meta property="og:title" content="Chapter 4 Summarizing Data | [PSY202A] Statistical Modeling in Psychological Sciences" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This GitBook is for guest lectures in PSY202A." />
   <meta name="github-repo" content="ihnwhiheo/gitbook-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="[PSY202A] Statistical Modeling in Psychological Sciences" />
+  <meta name="twitter:title" content="Chapter 4 Summarizing Data | [PSY202A] Statistical Modeling in Psychological Sciences" />
   
   <meta name="twitter:description" content="This GitBook is for guest lectures in PSY202A." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="introduction-to-r-part-1.html"/>
+<link rel="prev" href="introduction-to-r-part-2.html"/>
+<link rel="next" href="regression-and-anova.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -209,26 +209,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">[PSY202A] Statistical Modeling in Psychological Sciences</h1>
-<p class="author"><em><a href="https://ihnwhiheo.github.io/">Ihnwhi Heo, M.Sc.</a></em></p>
-<p class="date"><em>Fall 2024</em></p>
+<div id="summarizing-data" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Summarizing Data<a href="summarizing-data.html#summarizing-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="what-is-it-why-called-mplus-2" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> What is it? Why called Mplus?<a href="summarizing-data.html#what-is-it-why-called-mplus-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Mplus is a statistical modeling program that provides researchers with a flexible tool to analyze data</p>
+<ul>
+<li><p>Many models: regression, path analysis, factor analysis, SEM, MLM, longitudinal models, mixture model, mediation/moderation</p></li>
+<li><p>Many data: cross-sectional, longitudinal, single-/multilevel, observed/latent, incomplete</p></li>
+<li><p>Many variables: continuous, dichotomous, categorical, count</p></li>
+<li><p>Many estimator: maximum likelihood, weighted least squares, Bayesian</p></li>
+</ul>
 </div>
-<div id="introduction" class="section level1 hasAnchor" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction<a href="index.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Hi everyone! I’m Ihnwhi.</p>
-<p>It is my great pleasure to be your guest lecturer for PSY202A.</p>
-<p>Statistical modeling is a key component in conducting research in the psychological sciences. While many statistical toolkits are available to researchers, R is arguably one of the most useful free and open-source statistical software programs. It offers a dizzying array of analytic options to answer your important and exciting research questions. In the upcoming four lab sessions, you will be introduced to R and become familiar with its capabilities. These sessions are designed to help you get acquainted with the fundamentals of R and learn how to use it wisely as the next generation of psychologists. You will then be guided through summarizing and analyzing data using R.</p>
-<p>Are you ready? Let’s get it on!</p>
+<div id="syntax-based-programming-2" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Syntax-based programming<a href="summarizing-data.html#syntax-based-programming-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Commands and subcommands (<a href="https://www.statmodel.com/language.html" class="uri">https://www.statmodel.com/language.html</a>)</p></li>
+<li><p>Examples of commands? (<a href="https://www.youtube.com/watch?v=XeRRtdmu23k" class="uri">https://www.youtube.com/watch?v=XeRRtdmu23k</a>)</p>
+<ul>
+<li>We will be ‘mostly’ using TITLE, DATA, VARIABLE, ANALYSIS, MODEL, OUTPUT commands</li>
+<li>But we will also be often using DEFINE, SAVEDATA, PLOT, MONTECARLO commands</li>
+</ul></li>
+</ul>
+</div>
+<div id="some-tips-when-programming-2" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Some tips when programming<a href="summarizing-data.html#some-tips-when-programming-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Comments can be added with exclamation marks (!)</p></li>
+<li><p>Commands should end with colon (:), and subcommands should end with semicolon (;)</p></li>
+<li><p>Syntax is not case sensitive</p></li>
+<li><p>Data should consist of numeric values, with no variable names</p></li>
+<li><p>Data and Mplus input file should be in the same directory (like an R working directory)</p></li>
+</ol>
+<ul>
+<li>Otherwise, be sure to specify the correct directory</li>
+</ul>
+</div>
+<div id="some-tips-about-model-command-particularly-2" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Some tips about model command particularly<a href="summarizing-data.html#some-tips-about-model-command-particularly-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Start with a path diagram</p></li>
+<li><p>Think of it as specifying model parameters</p></li>
+<li><p>Care to the degrees of freedom (DF)</p></li>
+</ol>
+</div>
+<div id="example-multiple-linear-regression-using-maximum-likelihood-estimation-2" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Example: Multiple linear regression using maximum likelihood estimation<a href="summarizing-data.html#example-multiple-linear-regression-using-maximum-likelihood-estimation-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="model-syntax-2" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Model syntax<a href="summarizing-data.html#model-syntax-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="summarizing-data.html#cb5-1" tabindex="-1"></a><span class="sc">!</span> Title command</span>
+<span id="cb5-2"><a href="summarizing-data.html#cb5-2" tabindex="-1"></a>TITLE<span class="sc">:</span> Predicting album sales using ML multiple regression</span>
+<span id="cb5-3"><a href="summarizing-data.html#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="summarizing-data.html#cb5-4" tabindex="-1"></a><span class="sc">!</span> Data command</span>
+<span id="cb5-5"><a href="summarizing-data.html#cb5-5" tabindex="-1"></a>DATA<span class="sc">:</span></span>
+<span id="cb5-6"><a href="summarizing-data.html#cb5-6" tabindex="-1"></a>    <span class="sc">!</span> When data and input file are <span class="cf">in</span> the same working directory</span>
+<span id="cb5-7"><a href="summarizing-data.html#cb5-7" tabindex="-1"></a>    FILE IS Album Sales.csv; <span class="sc">!</span> Subcommands should end with ;</span>
+<span id="cb5-8"><a href="summarizing-data.html#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="summarizing-data.html#cb5-9" tabindex="-1"></a>    <span class="sc">!</span> When data and input file are <span class="cf">in</span> the different working directory</span>
+<span id="cb5-10"><a href="summarizing-data.html#cb5-10" tabindex="-1"></a>    <span class="sc">!</span> FILE IS c<span class="sc">:</span>\desktop\different folder\Album Sales.csv;</span>
+<span id="cb5-11"><a href="summarizing-data.html#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="summarizing-data.html#cb5-12" tabindex="-1"></a><span class="sc">!</span> Variable command</span>
+<span id="cb5-13"><a href="summarizing-data.html#cb5-13" tabindex="-1"></a>VARIABLE<span class="sc">:</span></span>
+<span id="cb5-14"><a href="summarizing-data.html#cb5-14" tabindex="-1"></a>    <span class="sc">!</span> Column <span class="fu">names</span> (i.e., ALL variable names)</span>
+<span id="cb5-15"><a href="summarizing-data.html#cb5-15" tabindex="-1"></a>    NAMES ARE adverts sales airplay attract;</span>
+<span id="cb5-16"><a href="summarizing-data.html#cb5-16" tabindex="-1"></a>    </span>
+<span id="cb5-17"><a href="summarizing-data.html#cb5-17" tabindex="-1"></a>    <span class="sc">!</span> Variables that will be used <span class="cf">in</span> our analysis</span>
+<span id="cb5-18"><a href="summarizing-data.html#cb5-18" tabindex="-1"></a>    USEVARIABLES ARE adverts sales airplay;</span>
+<span id="cb5-19"><a href="summarizing-data.html#cb5-19" tabindex="-1"></a>    </span>
+<span id="cb5-20"><a href="summarizing-data.html#cb5-20" tabindex="-1"></a><span class="sc">!</span> Analysis command</span>
+<span id="cb5-21"><a href="summarizing-data.html#cb5-21" tabindex="-1"></a>ANALYSIS<span class="sc">:</span></span>
+<span id="cb5-22"><a href="summarizing-data.html#cb5-22" tabindex="-1"></a>    ESTIMATOR IS ML; <span class="sc">!</span> This is the default</span>
+<span id="cb5-23"><a href="summarizing-data.html#cb5-23" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="summarizing-data.html#cb5-24" tabindex="-1"></a><span class="sc">!</span> Model command</span>
+<span id="cb5-25"><a href="summarizing-data.html#cb5-25" tabindex="-1"></a>MODEL<span class="sc">:</span></span>
+<span id="cb5-26"><a href="summarizing-data.html#cb5-26" tabindex="-1"></a>    <span class="sc">!</span> Let<span class="st">&#39;s predict sales using adverts and airplay</span></span>
+<span id="cb5-27"><a href="summarizing-data.html#cb5-27" tabindex="-1"></a><span class="st">    ! We regress sales on adverts and airplay</span></span>
+<span id="cb5-28"><a href="summarizing-data.html#cb5-28" tabindex="-1"></a><span class="st">    sales ON adverts airplay;</span></span>
+<span id="cb5-29"><a href="summarizing-data.html#cb5-29" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="summarizing-data.html#cb5-30" tabindex="-1"></a><span class="st">    ! If you do not specify variances of and covariances between predictors</span></span>
+<span id="cb5-31"><a href="summarizing-data.html#cb5-31" tabindex="-1"></a><span class="st">    ! degrees of freedom (DF) are not correct</span></span>
+<span id="cb5-32"><a href="summarizing-data.html#cb5-32" tabindex="-1"></a><span class="st">    ! Variances of exogenous variable</span></span>
+<span id="cb5-33"><a href="summarizing-data.html#cb5-33" tabindex="-1"></a><span class="st">    adverts airplay;</span></span>
+<span id="cb5-34"><a href="summarizing-data.html#cb5-34" tabindex="-1"></a><span class="st">    ! Covariances between exogenous variable</span></span>
+<span id="cb5-35"><a href="summarizing-data.html#cb5-35" tabindex="-1"></a><span class="st">    adverts WITH airplay;</span></span>
+<span id="cb5-36"><a href="summarizing-data.html#cb5-36" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="summarizing-data.html#cb5-37" tabindex="-1"></a><span class="st">! Output command</span></span>
+<span id="cb5-38"><a href="summarizing-data.html#cb5-38" tabindex="-1"></a><span class="st">OUTPUT:</span></span>
+<span id="cb5-39"><a href="summarizing-data.html#cb5-39" tabindex="-1"></a><span class="st">    TECH1 SAMPSTAT STDYX;</span></span>
+<span id="cb5-40"><a href="summarizing-data.html#cb5-40" tabindex="-1"></a><span class="st">    ! TECH1 to understand which parameters are being estimated</span></span>
+<span id="cb5-41"><a href="summarizing-data.html#cb5-41" tabindex="-1"></a><span class="st">    ! SAMPSTAT to check sample descriptive statistics</span></span>
+<span id="cb5-42"><a href="summarizing-data.html#cb5-42" tabindex="-1"></a><span class="st">    ! STDYX to standardize Y (i.e., DV) and X (i.e., IV)</span></span></code></pre></div>
+</div>
+<div id="part-of-the-output-file-2" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Part of the output file<a href="summarizing-data.html#part-of-the-output-file-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="summarizing-data.html#cb6-1" tabindex="-1"></a>MODEL RESULTS</span>
+<span id="cb6-2"><a href="summarizing-data.html#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="summarizing-data.html#cb6-3" tabindex="-1"></a>                                                    Two<span class="sc">-</span>Tailed</span>
+<span id="cb6-4"><a href="summarizing-data.html#cb6-4" tabindex="-1"></a>                    Estimate       S.E.  Est.<span class="sc">/</span>S.E.    P<span class="sc">-</span>Value</span>
+<span id="cb6-5"><a href="summarizing-data.html#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="summarizing-data.html#cb6-6" tabindex="-1"></a> SALES    ON</span>
+<span id="cb6-7"><a href="summarizing-data.html#cb6-7" tabindex="-1"></a>    ADVERTS            <span class="fl">0.087</span>      <span class="fl">0.007</span>     <span class="fl">12.082</span>      <span class="fl">0.000</span></span>
+<span id="cb6-8"><a href="summarizing-data.html#cb6-8" tabindex="-1"></a>    AIRPLAY            <span class="fl">3.589</span>      <span class="fl">0.285</span>     <span class="fl">12.608</span>      <span class="fl">0.000</span></span>
+<span id="cb6-9"><a href="summarizing-data.html#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="summarizing-data.html#cb6-10" tabindex="-1"></a> ADVERTS  WITH</span>
+<span id="cb6-11"><a href="summarizing-data.html#cb6-11" tabindex="-1"></a>    AIRPLAY          <span class="fl">604.061</span>    <span class="fl">421.412</span>      <span class="fl">1.433</span>      <span class="fl">0.152</span></span>
+<span id="cb6-12"><a href="summarizing-data.html#cb6-12" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="summarizing-data.html#cb6-13" tabindex="-1"></a> Means</span>
+<span id="cb6-14"><a href="summarizing-data.html#cb6-14" tabindex="-1"></a>    ADVERTS          <span class="fl">614.412</span>     <span class="fl">34.255</span>     <span class="fl">17.936</span>      <span class="fl">0.000</span></span>
+<span id="cb6-15"><a href="summarizing-data.html#cb6-15" tabindex="-1"></a>    AIRPLAY           <span class="fl">27.500</span>      <span class="fl">0.865</span>     <span class="fl">31.777</span>      <span class="fl">0.000</span></span></code></pre></div>
+</div>
+</div>
+<div id="additional-materials-2" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Additional materials<a href="summarizing-data.html#additional-materials-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>Official website at <a href="https://www.statmodel.com/" class="uri">https://www.statmodel.com/</a></p></li>
+<li><p>User’s guide and examples at <a href="https://www.statmodel.com/ugexcerpts.shtml" class="uri">https://www.statmodel.com/ugexcerpts.shtml</a> <br> <span class="math inline">\(\rightarrow\)</span> Highly recommended!</p></li>
+<li><p>Mplus YouTube channel at <a href="https://www.youtube.com/c/MplusVideos" class="uri">https://www.youtube.com/c/MplusVideos</a></p></li>
+<li><p>QuantFish YouTube channel at <a href="https://www.youtube.com/c/QuantFish" class="uri">https://www.youtube.com/c/QuantFish</a></p></li>
+<li><p>Tutorials by Prof. Rens van de Schoot and his students at <a href="https://www.rensvandeschoot.com/tutorials/" class="uri">https://www.rensvandeschoot.com/tutorials/</a></p></li>
+</ol>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction-to-r-part-1.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction-to-r-part-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression-and-anova.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
