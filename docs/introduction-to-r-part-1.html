@@ -660,13 +660,13 @@ mean() to compute the mean.)</li>
 <ul>
 <li>The most common way is to use the function <code>read.table()</code> to read in .txt files or .dat files; or <code>read.csv()</code> for .csv files.</li>
 </ul>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="introduction-to-r-part-1.html#cb35-1" tabindex="-1"></a>mydata1 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&quot;Lab 1/SAT.dat&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="introduction-to-r-part-1.html#cb35-1" tabindex="-1"></a>mydata1 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file =</span> <span class="st">&quot;SAT.dat&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb35-2"><a href="introduction-to-r-part-1.html#cb35-2" tabindex="-1"></a><span class="fu">class</span>(mydata1)</span>
-<span id="cb35-3"><a href="introduction-to-r-part-1.html#cb35-3" tabindex="-1"></a><span class="fu">write.csv</span>(mydata1, <span class="at">file =</span> <span class="st">&quot;Lab 1/newSAT.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb35-3"><a href="introduction-to-r-part-1.html#cb35-3" tabindex="-1"></a><span class="fu">write.csv</span>(mydata1, <span class="at">file =</span> <span class="st">&quot;SAT.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <ul>
 <li>You can try this as well:</li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction-to-r-part-1.html#cb36-1" tabindex="-1"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;Lab 1/SAT.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction-to-r-part-1.html#cb36-1" tabindex="-1"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;SAT.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
 <span id="cb36-2"><a href="introduction-to-r-part-1.html#cb36-2" tabindex="-1"></a><span class="fu">class</span>(mydata2)</span></code></pre></div>
 <ul>
 <li>You can also manually choose a file to import

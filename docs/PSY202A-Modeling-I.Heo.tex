@@ -360,7 +360,7 @@ Are you ready? Let's get it on!
   \begin{itemize}
   \tightlist
   \item
-    You can give an object with any name you want insofar as that name is taken in R already.
+    You can give an object with any name you want insofar as that name is not taken in R already.
   \end{itemize}
 \item
   An object can contain more than one value and have more complex data strutures, such as:
@@ -959,9 +959,9 @@ Can you run the code below? What do you see?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mydata1 }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\AttributeTok{file =} \StringTok{"Lab 1/SAT.dat"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{mydata1 }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\AttributeTok{file =} \StringTok{"SAT.dat"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
 \FunctionTok{class}\NormalTok{(mydata1)}
-\FunctionTok{write.csv}\NormalTok{(mydata1, }\AttributeTok{file =} \StringTok{"Lab 1/newSAT.csv"}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{write.csv}\NormalTok{(mydata1, }\AttributeTok{file =} \StringTok{"SAT.csv"}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -973,7 +973,7 @@ Can you run the code below? What do you see?
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mydata2 }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"Lab 1/SAT.csv"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
+\NormalTok{mydata2 }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"SAT.csv"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
 \FunctionTok{class}\NormalTok{(mydata2)}
 \end{Highlighting}
 \end{Shaded}

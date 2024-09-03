@@ -471,15 +471,15 @@ getwd()
 - The most common way is to use the function ``read.table()`` to read in .txt files or .dat files; or ``read.csv()`` for .csv files.
 
 ```{r, eval=FALSE}
-mydata1 <- read.table(file = "Lab 1/SAT.dat", header = TRUE)
+mydata1 <- read.table(file = "SAT.dat", header = TRUE)
 class(mydata1)
-write.csv(mydata1, file = "Lab 1/newSAT.csv", row.names = FALSE)
+write.csv(mydata1, file = "SAT.csv", row.names = FALSE)
 ```
 
 - You can try this as well:
 
 ```{r, eval=FALSE}
-mydata2 <- read.csv(file = "Lab 1/SAT.csv", header = TRUE, sep = ",")
+mydata2 <- read.csv(file = "SAT.csv", header = TRUE, sep = ",")
 class(mydata2)
 ```
 
