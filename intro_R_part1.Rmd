@@ -536,3 +536,16 @@ write.table(mydata1, file = "SAT.txt", sep = "\t", row.names = FALSE, col.names 
   - Hint: assign the sum of two variables to ``datSAT$Combined``.
 4. Save the data set datSAT (now with a new variable Combined) to your working directory ``PSY202A_Lab 1``, and name it as ``SATCombined.csv``.
 5. Save your R script as ``Exercise 1.R`` in your working directory ``PSY202A_Lab 1`` (File menu -> Save).
+
+## R Markdown
+
+- Reproducibility is a key philosophical principle in the psychological sciences.
+
+- An easy yet elegant way to ensure reproducibility in R programming is by using R Markdown for documentation.
+
+- I strongly recommend downloading R Markdown before our next meeting. You can find resources at:
+  - https://rmarkdown.rstudio.com/lesson-1.html
+  - https://vimeo.com/178485416
+  - https://yihui.org/tinytex/
+
+- This is a great opportunity to learn how to use R Markdown, which you can then apply when submitting your upcoming homework assignments.
