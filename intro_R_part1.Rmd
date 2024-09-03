@@ -123,7 +123,7 @@ $$
 ## Types of objects
 
 - In R, anything with a name is an object.
-  - You can give an object with any name you want insofar as that name is taken in R already.
+  - You can give an object with any name you want insofar as that name is not taken in R already.
 
 - An object can contain more than one value and have more complex data strutures, such as:
   - vector: a series of values of the same data type
