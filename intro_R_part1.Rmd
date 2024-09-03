@@ -513,7 +513,7 @@ mydata1$Math
 
 - Similar to ``read.table()``, the most-used expoert function is ``write.table()``.
 - You can export your data into some different formats than it was originally imported.
-- To export the mydata1 into a tab-delimited file without row nmaes:
+- To export the mydata1 into a tab-delimited file without row names:
 
 ```{r, eval=FALSE}
 write.table(mydata1, file = "SAT.txt", sep = "\t", row.names = FALSE, col.names = TRUE)

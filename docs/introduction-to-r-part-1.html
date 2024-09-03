@@ -697,7 +697,7 @@ mean() to compute the mean.)</li>
 <ul>
 <li>Similar to <code>read.table()</code>, the most-used expoert function is <code>write.table()</code>.</li>
 <li>You can export your data into some different formats than it was originally imported.</li>
-<li>To export the mydata1 into a tab-delimited file without row nmaes:</li>
+<li>To export the mydata1 into a tab-delimited file without row names:</li>
 </ul>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introduction-to-r-part-1.html#cb40-1" tabindex="-1"></a><span class="fu">write.table</span>(mydata1, <span class="at">file =</span> <span class="st">&quot;SAT.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb40-2"><a href="introduction-to-r-part-1.html#cb40-2" tabindex="-1"></a><span class="do">## sep=&quot;\t&quot; tells R to use tab as separator in the text file. You can also try sep=&quot; &quot;, or sep=&quot;,&quot;.</span></span></code></pre></div>
