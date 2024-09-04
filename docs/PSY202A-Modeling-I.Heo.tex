@@ -1126,19 +1126,511 @@ Can you run the code below? What do you see?
 
 \chapter{Introduction to R: Part 2}\label{introduction-to-r-part-2}
 
-\section{To be updated\ldots{}}\label{to-be-updated}
+\section{What will we do?}\label{what-will-we-do}
 
-Ihnwhi is pondering the best way to teach this section.
+\includegraphics{./img/tidyverse_meme.png}
+
+\includegraphics{./img/rmarkdown_meme.png}
+
+\section{Packages}\label{packages}
+
+\begin{itemize}
+\tightlist
+\item
+  A package is a collection of previously programmed functions and data sets, often including functions for specific tasks.
+\item
+  Some packages come with the base installation of R.
+\item
+  There are thousands of user-contributed packages that you must manually download and install.
+\item
+  To see which packages you have, click View -\textgreater{} Show Package.
+\item
+  To see all available packages: \url{https://cran.r-project.org/web/packages/}
+\item
+  Some packages can be very handy when working with psychological data.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The \texttt{psych} package is a general-purpose toolbox for analyzing psychological data.
+  \item
+    The \texttt{haven} package can be used to import and export SPSS, Stata, and SAS files.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Installing packages}\label{installing-packages}
+
+\begin{itemize}
+\tightlist
+\item
+  The easiest way to install packages and add packages to the base version of R is to use the Tools -\textgreater{} Install Packages\ldots{}
+\item
+  Or use \texttt{insstall.packages()} function as follows:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"psych"}\NormalTok{)}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"haven"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Loading packages}\label{loading-packages}
+
+\begin{itemize}
+\tightlist
+\item
+  To access the package you have already installed, load it to the current R session using the function \texttt{library()}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(psych)}
+\FunctionTok{library}\NormalTok{(haven)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Getting help}\label{getting-help}
+
+\begin{itemize}
+\tightlist
+\item
+  There are many ways to getting help for R programming.
+\end{itemize}
+
+\subsection{Modern way of getting help}\label{modern-way-of-getting-help}
+
+\begin{itemize}
+\tightlist
+\item
+  Google is your friend.
+\item
+  Stack Overflow is your cool friend.
+\item
+  YouTube is your another wonderful friend.
+\item
+  AI is your badass friend.
+\end{itemize}
+
+\subsection{Traditional way of getting help}\label{traditional-way-of-getting-help}
+
+\begin{itemize}
+\tightlist
+\item
+  When R was installed, HTML format help files were copied on your hard drive.
+\item
+  To access these files, you can click Help -\textgreater{} R Help.
+\item
+  Or just type:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help.start}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  To request an R document for a special function, use ``?''. To illustrate:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?log}
+\CommentTok{\# This will pull up an Internet window with everything about the function log()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  To request help by keywords, use ``??''. To demonstrate:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{??logarithm}
+\CommentTok{\# This will give you an information window }
+\CommentTok{\# listing all the functions that contain the term "logarithm".}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  To request help for a specific package, use \texttt{help(package\ =\ "\ ")}. That said:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(}\AttributeTok{package =} \StringTok{"psych"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Tidyverse}\label{tidyverse}
+
+\begin{itemize}
+\tightlist
+\item
+  The tidyverse is a collection of R packages for data analysis that are developed with common ideas and norms - the tidyverse style.
+\item
+  More and more popular in recent years.
+\item
+  Website: \url{https://www.tidyverse.org/packages}
+\item
+  To install and load the tidyverse packages:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Purpose is to make R code easier to work with:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Data manipulation
+  \item
+    Data visualization
+  \item
+    Programming
+  \item
+    Integration with other packages
+  \item
+    \ldots and more
+  \end{itemize}
+\item
+  Book recommended: R for Data Science
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Freely available at \url{https://r4ds.had.co.nz/}
+    \includegraphics{./img/RforDS.png}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Tidyverse basics}\label{tidyverse-basics}
+
+\begin{itemize}
+\tightlist
+\item
+  As it is difficult to change how fundamental base R structures/functions work, the tidyverse suite of packages creates and uses data structures, functions, and operators to make working with data more intuitive.
+\item
+  The two most basic changes are in the use of pipes and tibbles.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Packages for tidyverse demo}
+\FunctionTok{library}\NormalTok{(datasets)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Pipes}\label{pipes}
+
+\begin{itemize}
+\tightlist
+\item
+  Stringing together commands in R can be quite daunting. Also, trying to understand code that has many nested functions can be confusing.
+\item
+  To make R code more human readable, the Tidyverse tools use the pipe, \texttt{\%\textgreater{}\%}, which was acquired from the magrittr package and comes installed automatically with Tidyverse.
+\item
+  The pipe allows the output of a previous command to be used as input to another command instead
+  of using nested functions.
+\item
+  Hint: The shortcut to write pipe is \texttt{shift\ +\ command\ +\ M}.
+\end{itemize}
+
+\subsubsection{Exercise: pipes}\label{exercise-pipes}
+
+\begin{itemize}
+\tightlist
+\item
+  Base R method of running more than one command
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\DecValTok{83}\NormalTok{)}
+\FunctionTok{round}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{83}\NormalTok{), }\AttributeTok{digit =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Running more than one command with piping
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\DecValTok{83}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{round}\NormalTok{(}\AttributeTok{digit =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Tibbles}\label{tibbles}
+
+\begin{itemize}
+\tightlist
+\item
+  A core component of the tidyverse is the tibble.
+\item
+  Tibbles are a modern rework of the standard \texttt{data.frame}, with some internal improvements to make code more reliable.
+\item
+  They are data frames but do not follow all of the same rules. For example, tibbles can have column names that are not normally allowed, such as numbers/symbols.
+\item
+  Tibbles can be created directly using the \texttt{tibble()} function or data frames can be converted into tibbles using \texttt{as\_tibble(name\_of\_df)}.
+\item
+  In this section of code, the iris data frame is converted into a tibble. The iris dataset consists of five variables: \texttt{Sepal.Length}, \texttt{Sepal.Width}, \texttt{Petal.Length}, \texttt{Petal.Width}, and \texttt{Species}.
+\end{itemize}
+
+\includegraphics{./img/iris_data.png}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Loading the iris dataset from the datasets package}
+\FunctionTok{data}\NormalTok{(}\StringTok{"iris"}\NormalTok{)}
+
+\CommentTok{\# Converting the iris data.frame into a tibble object}
+\NormalTok{tibble\_iris }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(iris)}
+
+\CommentTok{\# Using a data.frame as a tibble with a pipe operator}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Differences between tibbles and data.frames}\label{differences-between-tibbles-and-data.frames}
+
+\begin{itemize}
+\tightlist
+\item
+  The main differences between \texttt{tibbles} and \texttt{data.frames} relate to printing and subsetting.
+\end{itemize}
+
+\subsubsection{Printing}\label{printing}
+
+\begin{itemize}
+\tightlist
+\item
+  A nice feature of a tibble is that when printing a variable to screen, it will show only the first 10 rows and the columns that fit to the screen by default.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Default printing of data.frame}
+\NormalTok{iris }\CommentTok{\# Prints 150 rows}
+
+\CommentTok{\# Default printing of tibble}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{() }\CommentTok{\# Prints 10 row}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  This is nice since you don't have to specify head() to take a quick look at your dataset.
+\item
+  If it is desirable to view more of the dataset, the print() function can change the number of rows or columns displayed.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Printing of tibble with print() {-} change defaults}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{print}\NormalTok{(}\AttributeTok{n =} \DecValTok{20}\NormalTok{, }\AttributeTok{width =} \ConstantTok{Inf}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Subsetting}\label{subsetting}
+
+\begin{itemize}
+\tightlist
+\item
+  When subsetting base R data.frames the default behavior is to simplify the output to the simplest data structure (i.e., a vector).
+\item
+  If you use piping to subset a data frame, then the notation is slightly different from base R, requiring a placeholder \texttt{.} prior to the \texttt{{[}\ {]}} or \texttt{\$}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Subsetting the Species variable in base R}
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Species}
+\NormalTok{iris[ ,}\StringTok{"Species"}\NormalTok{]}
+
+\CommentTok{\# Subsetting the Species variable in output using a pipe}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ .}\SpecialCharTok{$}\NormalTok{Species}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ .[ ,}\StringTok{"Species"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Note that some older functions do not work with tibbles, so if you need to convert a tibble to a data.frame, the function as.data.frame(name\_of\_tibble) will easily convert it.
+\end{itemize}
+
+\subsection{Tidyverse tools}\label{tidyverse-tools}
+
+\begin{itemize}
+\tightlist
+\item
+  Tidyverse has many tools for data wrangling, cleaning, and visualization.
+\end{itemize}
+
+\subsubsection{dplyr}\label{dplyr}
+
+\begin{itemize}
+\item
+  Perhaps the most useful tool in the tidyverse is dplyr. It's a Swiss-army knife for data wrangling.
+\item
+  dplyr has many handy functions:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{select()} extracts columns and returns a tibble.
+  \item
+    \texttt{arrange()} changes the ordering of the rows.
+  \item
+    \texttt{filter()} picks cases based on their values.
+  \item
+    \texttt{mutate()} adds new variables that are functions of existing variables.
+  \item
+    \texttt{rename()} easily changes the name of a column(s).
+  \item
+    \texttt{summarise()} reduces multiple values down to a single summary.
+  \item
+    \texttt{pull()} extracts a single column as a vector.
+  \item
+    \texttt{\_join()} group of functions that merge two data frames together (e.g., \texttt{inner\_join()}, \texttt{left\_join()}, \texttt{right\_join()}, and \texttt{full\_join()}).
+  \end{itemize}
+\item
+  Here is an example of the \texttt{select()}, \texttt{filter()}, and \texttt{summarise()} functions using the iris dataset.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Only select the columns related to the Sepal of the iris}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Sepal.Length,Sepal.Width) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#F ilter for irises with a Sepal.Length greater than 5 and Sepal.Width greater than 4}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Sepal.Length }\SpecialCharTok{\textgreater{}} \DecValTok{5}\NormalTok{, Sepal.Width }\SpecialCharTok{\textgreater{}} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate the average Sepal.Length and Sepal.Width for each iris Species}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean.Sepal.Length =} \FunctionTok{mean}\NormalTok{(Sepal.Length), }\AttributeTok{mean.Sepal.width =} \FunctionTok{mean}\NormalTok{(Sepal.Width))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Final exercise}\label{final-exercise-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Subset the \texttt{Species} column from the iris dataset using a pipe.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Hint: Use a \texttt{.} before the \texttt{{[}\ {]}} or \texttt{\$}.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Select the \texttt{Petal.Length} and \texttt{Petal.Width} columns from the iris dataset.
+\item
+  Find the average \texttt{Petal.Length} and \texttt{Petal.Width} for each iris Species.
+\end{enumerate}
+
+\section{Bonus: R Markdown}\label{bonus-r-markdown}
+
+\begin{itemize}
+\tightlist
+\item
+  If you have not downloaded the R Markdown yet, please go to \url{https://rmarkdown.rstudio.com/lesson-1.html} and download the \texttt{rmarkdown} package.
+\item
+  R Markdown is a tool for reproducible documentation in statistics. R markdown generates a new file that contains selected text, code, and results from the \texttt{.Rmd} file.
+\item
+  The newly created file can be a finished website, PDF document, Word document, slide (beamer, powerpoint, xaringan) show, notebook, handout, book, dashboard, Shiny Apps, package vignette, or more.
+\end{itemize}
+
+\subsection{How does the R Markdown work?}\label{how-does-the-r-markdown-work}
+
+\includegraphics{./img/rmarkdown_works.png}
+
+\begin{itemize}
+\tightlist
+\item
+  According to \url{https://rmarkdown.rstudio.com/lesson-2.html},
+
+  \begin{itemize}
+  \tightlist
+  \item
+    When you run render, R Markdown feeds the \texttt{.Rmd} file to \texttt{knitr}, which executes all of the code chunks and creates a new markdown (.md) document which includes the code and its output.
+  \item
+    The markdown file generated by \texttt{knitr} is then processed by \texttt{pandoc} which is responsible for creating the finished format.
+  \item
+    This may sound complicated, but R Markdown makes it extremely simple by encapsulating all of the above processing into a single render function.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Practice}\label{practice}
+
+\begin{itemize}
+\tightlist
+\item
+  Generate any PDF document from R Markdown by knitting your markdown file.
+\item
+  You may need to visit:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \url{https://yihui.org/tinytex/}
+  \item
+    \url{https://yihui.org/tinytex/r/\#debugging}
+  \end{itemize}
+\end{itemize}
 
 \chapter{Summarizing Data}\label{summarizing-data}
 
-\section{To be updated\ldots{}}\label{to-be-updated-1}
+\section{To be updated\ldots{}}\label{to-be-updated}
 
 Ihnwhi is pondering the best way to teach this section.
 
 \chapter{Regression and ANOVA}\label{regression-and-anova}
 
-\section{To be updated\ldots{}}\label{to-be-updated-2}
+\section{To be updated\ldots{}}\label{to-be-updated-1}
 
 Ihnwhi is pondering the best way to teach this section.
 
