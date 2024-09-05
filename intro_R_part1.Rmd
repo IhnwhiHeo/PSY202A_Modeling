@@ -69,7 +69,7 @@ Comment
 # Comment
 ```
 
-## Numerical computation
+## Computation
 
 ### Using R as a numerical calculator
 
