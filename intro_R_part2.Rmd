@@ -1,5 +1,4 @@
 # Introduction to R: Part 2
-
 ## What will we do?
 
 ![](./img/tidyverse_meme.png)
