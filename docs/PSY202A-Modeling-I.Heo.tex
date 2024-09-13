@@ -1624,13 +1624,710 @@ Can you run the code below? What do you see?
 
 \chapter{Summarizing Data}\label{summarizing-data}
 
-\section{To be updated\ldots{}}\label{to-be-updated}
+\section{Are you ready?}\label{are-you-ready}
 
-Ihnwhi is pondering the best way to teach this section.
+\includegraphics{./img/fun_datvis_meme.png}
+
+\subsection{Wait\ldots{} you guys are getting results???!}\label{wait-you-guys-are-getting-results}
+
+\includegraphics{./img/wait_results.jpg}
+
+\section{Packages}\label{packages-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Here is a list of packages that we will use today:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{modeest} has the \texttt{mfv()} function for the mode.
+  \item
+    \texttt{moments} has the \texttt{skewness()} and \texttt{kurtosis()} functions.
+  \item
+    \texttt{tidyverse} contains the \texttt{ggplot2} package for data visualization.
+  \end{itemize}
+\item
+  For those who hope to dive into the fancier data visualization tools, consider:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    RShiny at \url{https://shiny.posit.co/r/gallery/}.
+  \item
+    Extensions of the \texttt{ggplot2} package at \url{https://exts.ggplot2.tidyverse.org/gallery/}.
+  \end{itemize}
+\end{itemize}
+
+\section{Numerical methods}\label{numerical-methods}
+
+\subsection{Peabody data}\label{peabody-data}
+
+\begin{itemize}
+\item
+  For the purpose of today's demonstration, we will use the following data from 40 children who completed the Peabody Developmental Motor Scales (PDMS).
+\item
+  The PDMS is a popular standardized test used by physical and occupational therapists for children less than six.
+\item
+  The variables include peabody scores, gender, and age (in months).
+\item
+  The dataset is as follows:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Peabody data}
+\NormalTok{peabody }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{123}\NormalTok{,}\DecValTok{99}\NormalTok{,}\DecValTok{80}\NormalTok{,}\DecValTok{81}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{104}\NormalTok{,}\DecValTok{69}\NormalTok{,}\DecValTok{86}\NormalTok{,}\DecValTok{107}\NormalTok{,}\DecValTok{94}\NormalTok{,}\DecValTok{82}\NormalTok{,}\DecValTok{99}\NormalTok{,}\DecValTok{83}\NormalTok{,}\DecValTok{98}\NormalTok{,}\DecValTok{86}\NormalTok{,}\DecValTok{74}\NormalTok{,}\DecValTok{67}\NormalTok{,}\DecValTok{90}\NormalTok{,}\DecValTok{106}\NormalTok{,}\DecValTok{102}\NormalTok{,}
+             \DecValTok{68}\NormalTok{,}\DecValTok{80}\NormalTok{,}\DecValTok{76}\NormalTok{,}\DecValTok{65}\NormalTok{,}\DecValTok{69}\NormalTok{,}\DecValTok{81}\NormalTok{,}\DecValTok{76}\NormalTok{,}\DecValTok{68}\NormalTok{,}\DecValTok{84}\NormalTok{,}\DecValTok{88}\NormalTok{,}\DecValTok{68}\NormalTok{,}\DecValTok{92}\NormalTok{,}\DecValTok{92}\NormalTok{,}\DecValTok{97}\NormalTok{,}\DecValTok{78}\NormalTok{,}\DecValTok{77}\NormalTok{,}\DecValTok{94}\NormalTok{,}\DecValTok{74}\NormalTok{,}\DecValTok{89}\NormalTok{,}\DecValTok{68}\NormalTok{)}
+
+\NormalTok{gender }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}
+            \StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"F"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}
+            \StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{,}\StringTok{"M"}\NormalTok{)}
+
+\NormalTok{age }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{35}\NormalTok{,}\DecValTok{45}\NormalTok{,}\DecValTok{38}\NormalTok{,}\DecValTok{40}\NormalTok{,}\DecValTok{38}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{45}\NormalTok{,}\DecValTok{34}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{51}\NormalTok{,}\DecValTok{34}\NormalTok{,}\DecValTok{35}\NormalTok{,}\DecValTok{37}\NormalTok{,}\DecValTok{37}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{37}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{22}\NormalTok{,}\DecValTok{28}\NormalTok{,}\DecValTok{18}\NormalTok{,}\DecValTok{20}\NormalTok{,}
+         \DecValTok{25}\NormalTok{,}\DecValTok{18}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{24}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{26}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{13}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  These variables can be stored in a data frame with the following code:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Make a data frame}
+\NormalTok{peabody\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{peabody =}\NormalTok{ peabody, }\AttributeTok{gender =}\NormalTok{ gender, }\AttributeTok{age =}\NormalTok{ age)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Central tendency}\label{central-tendency}
+
+\begin{itemize}
+\tightlist
+\item
+  Mean
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 85.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(peabody\_df}\SpecialCharTok{$}\NormalTok{peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 85.1
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Median
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{median}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 83.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{median}\NormalTok{(peabody\_df}\SpecialCharTok{$}\NormalTok{peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 83.5
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Mode
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(modeest)}
+\FunctionTok{mfv}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 68
+\end{verbatim}
+
+\subsection{Variability}\label{variability}
+
+\begin{itemize}
+\tightlist
+\item
+  Variance
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{var}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 181.1692
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Standard deviation
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sd}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13.45991
+\end{verbatim}
+
+\subsection{Skewness}\label{skewness}
+
+\begin{itemize}
+\item
+  There are multiple methods that can be used to calculate skewness in R:
+\item
+  You could use the formula for skewness.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define sample size}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(peabody)}
+
+\CommentTok{\# Compute the skewness}
+\NormalTok{(}\FunctionTok{sum}\NormalTok{((peabody}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(peabody))}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{)}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{((peabody}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(peabody))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{3}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.524655
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  But the \texttt{skewness()} function in the \texttt{moments} package makes it even easier.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(moments)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'moments'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:modeest':
+## 
+##     skewness
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{skewness}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.524655
+\end{verbatim}
+
+\subsection{Kurtosis}\label{kurtosis}
+
+\begin{itemize}
+\item
+  There are multiple methods for calculating kurtosis in R.
+\item
+  You can use the formula:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(peabody)}
+\NormalTok{(}\FunctionTok{sum}\NormalTok{((peabody}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(peabody))}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{)}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{sum}\NormalTok{((peabody}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(peabody))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{n)}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.911796
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Or you can use the \texttt{kurtosis()} function in the \texttt{moments} package.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kurtosis}\NormalTok{(peabody)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.911796
+\end{verbatim}
+
+\subsection{Using the tidyverse package}\label{using-the-tidyverse-package}
+
+\begin{itemize}
+\tightlist
+\item
+  tidyverse allows us to use the \texttt{summarise()} function.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    which allows us to get various descriptive statistics such as minimum, maximum, mean, median, variance, standard deviation, skewness, kurtosis, etc.
+  \end{itemize}
+\item
+  As a small exercise, try to run the code below. What do you see?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summarise}\NormalTok{(peabody\_df,}
+          \AttributeTok{mean.peabody =} \FunctionTok{mean}\NormalTok{(peabody),}
+          \AttributeTok{sd.peabody =} \FunctionTok{sd}\NormalTok{(peabody),}
+          \AttributeTok{skew.peabody =}\NormalTok{ moments}\SpecialCharTok{::}\FunctionTok{skewness}\NormalTok{(peabody),}
+          \AttributeTok{kurt.peabody =}\NormalTok{ moments}\SpecialCharTok{::}\FunctionTok{kurtosis}\NormalTok{(peabody))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Visual methods}\label{visual-methods}
+
+\begin{itemize}
+\item
+  Be sure to refer to the cheatsheet I have attached on CatCourses!
+\item
+  Every useful piece of information is there!
+\end{itemize}
+
+\subsection{Using the tidyverse package}\label{using-the-tidyverse-package-1}
+
+\begin{itemize}
+\item
+  The \texttt{ggplot2} package is a core component of the tidyverse that allows us to build data visualizations.
+\item
+  ChatGPT is so good at programming \texttt{ggplot2} code for you. But of course, sometimes it itself does produce wrong code, particularly when you want to do complicated visualizations.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    It is suggested to know the fundamental grammar to be a smart user of the AI!
+  \end{itemize}
+\item
+  The idea behind \texttt{ggplot2} is that every new concept we introduce will be layered on top of the information we've already learned.
+\item
+  In this way, \texttt{ggplot2} uses layers of information added on top of each other to help build the graph.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This is most evidenced by how each line is separated by a plus sign (+). Each line of code is a different layer of the graph.
+  \end{itemize}
+\item
+  You'll see what I mean as we go through several example graphs.
+\item
+  Remember to work with a tibble instead of a data frame. Tibbles work much better in tidyverse.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'tidyr' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'readr' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'dplyr' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'stringr' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.0     v stringr   1.5.1
+## v ggplot2   3.5.1     v tibble    3.2.1
+## v lubridate 1.9.3     v tidyr     1.3.1
+## v purrr     1.0.2     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{peabody\_tib }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(peabody\_df)}
+\NormalTok{peabody\_tib}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 40 x 3
+##    peabody gender   age
+##      <dbl> <chr>  <dbl>
+##  1     123 M         35
+##  2      99 F         45
+##  3      80 F         38
+##  4      81 F         40
+##  5      90 F         38
+##  6     104 M         42
+##  7      69 F         36
+##  8      86 F         45
+##  9     107 F         34
+## 10      94 F         36
+## # i 30 more rows
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The type of plot you want to make is referred to as a \texttt{geom}. There are dozens of \texttt{geom} options available in \texttt{ggplot2}. For todays' lesson, we will focus on four specific \texttt{geoms}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{geom\_boxplot()}
+  \item
+    \texttt{geom\_histogram()}
+  \item
+    \texttt{geom\_bar()}
+  \item
+    \texttt{geom\_point()}
+  \end{itemize}
+\item
+  When using \texttt{ggplot2}, plots will take the following general form:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ DATASET, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{VARIABLE}\NormalTok{(S))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_PLOT\_TYPE}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  First, you start with the \texttt{ggplot()} function, where you will specify the data.
+\item
+  Second, you will include the \texttt{aes} argument, which is where you specify the variable(s) you want to plot.
+\item
+  Third, you select the geom type (e.g., \texttt{geom\_boxplot()}) you are interested in plotting. This is also where you can begin to customize your plots.
+\end{itemize}
+
+\subsection{Boxplot}\label{boxplot}
+
+\begin{itemize}
+\item
+  Boxplots are a useful method for presenting the dispersion of the data, the symmetry of the distribution, and the potential outliers (or extreme scores).
+\item
+  The following code provides a basic \texttt{ggplot2} setup for a boxplot of the peabody scorees:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{peabody\_tib, }\FunctionTok{aes}\NormalTok{(peabody)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-72-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  By adding another layer, you can further customize your plot. In the code below, I illustrate how you can change the coloring of the boxplot and remove the tick marks on the x-axis.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{peabody)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{"purple"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{( ) }\DocumentationTok{\#\# removes x{-}axis ticks}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-73-1.pdf}
+
+\begin{itemize}
+\item
+  You can also change the shape and color of the outlier.
+\item
+  All you have to do is add another line of code that specifies the outlier color, shape, and size.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{peabody)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{"purple"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+               \AttributeTok{outlier.color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{outlier.shape =} \DecValTok{18}\NormalTok{, }\AttributeTok{outlier.size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{( ) }\DocumentationTok{\#\# removes x{-}axis ticks}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-74-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  There are several available shapes in \texttt{ggplot2}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    I provide some examples below, but you can see more here: \url{https://ggplot2.tidyverse.org/articles/ggplot2-specs.html}
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{shapes }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{shape =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{19}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{23}\NormalTok{, }\DecValTok{20}\NormalTok{),}
+  \AttributeTok{x =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{24} \SpecialCharTok{\%/\%} \DecValTok{5}\NormalTok{,}
+  \AttributeTok{y =} \SpecialCharTok{{-}}\NormalTok{(}\DecValTok{0}\SpecialCharTok{:}\DecValTok{24} \SpecialCharTok{\%\%} \DecValTok{5}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(shapes, }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{shape =}\NormalTok{ shape), }\AttributeTok{size =} \DecValTok{5}\NormalTok{, }\AttributeTok{fill =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ shape), }\AttributeTok{hjust =} \DecValTok{0}\NormalTok{, }\AttributeTok{nudge\_x =} \FloatTok{0.15}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_shape\_identity}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{expand\_limits}\NormalTok{(}\AttributeTok{x =} \FloatTok{4.1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-75-1.pdf}
+
+\subsection{Histograms}\label{histograms}
+
+\begin{itemize}
+\item
+  Histograms are a useful method for presenting the dispersion of the data and the symmetry of the distribution.
+\item
+  The following code provides the setup for a histogram of the peabody scores:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(peabody)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"green"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-76-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  You can change the bindwidth of the histogram using the following code:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(peabody)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"green"}\NormalTok{,}
+               \AttributeTok{binwidth =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-77-1.pdf}
+
+\begin{itemize}
+\item
+  Alternatively, you could set the total number of bins with the \texttt{bins} argument.
+\item
+  Sometimes you want to display plots for a subset of your data. This can be accomplished using the \texttt{facet\_wrap()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(peabody)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"green"}\NormalTok{, }
+                 \AttributeTok{binwidth =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{gender, }\AttributeTok{nrow =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-78-1.pdf}
+
+\subsection{Bar charts}\label{bar-charts}
+
+\begin{itemize}
+\tightlist
+\item
+  Bar charts are a useful method for displaying categorical data. They can show the number of cases in each of the categories.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(gender)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"purple"}\NormalTok{,}\StringTok{"green"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-79-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Perhaps you would like to change the \texttt{F} to Female and the \texttt{M} to Male. The x-axis ticks can be changed using the following trick:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(gender)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"purple"}\NormalTok{,}\StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{, }\StringTok{"Male"}\NormalTok{)) }\DocumentationTok{\#\# Changes the labels on the x{-}axis ticks}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-80-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Sometimes it can be helpful to change the plot title, x-axis and y-axis.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(gender)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \FunctionTok{c}\NormalTok{(}\StringTok{"purple"}\NormalTok{,}\StringTok{"green"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Female"}\NormalTok{, }\StringTok{"Male"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{\textquotesingle{}Gender\textquotesingle{}}\NormalTok{,}
+       \AttributeTok{y=}\StringTok{\textquotesingle{}Count of Children\textquotesingle{}}\NormalTok{,}
+       \AttributeTok{title=}\StringTok{\textquotesingle{}Gender Breakdown of Children\textquotesingle{}}\NormalTok{) }\DocumentationTok{\#\# Allows you to change the title and axis labels}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-81-1.pdf}
+
+\subsection{Scatterplots}\label{scatterplots}
+
+\begin{itemize}
+\tightlist
+\item
+  Scatterplots are a useful method for visualizing the relationship between two numerical variables. We will not discuss how to interpret the scatterplot today, but I thought it might be helpful for you to see how the \texttt{geom\_point()} function works.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ peabody\_tib, }\FunctionTok{aes}\NormalTok{(peabody,age)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{shape =} \DecValTok{19}\NormalTok{, }\AttributeTok{size =} \FloatTok{2.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"cyan3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-82-1.pdf}
+
+\subsection{Important points about data visualization}\label{important-points-about-data-visualization}
+
+\begin{itemize}
+\item
+  At its core, the term `data visualization' refers to any visual display of data that helps us understand the underlying data better.
+\item
+  Generally, there are a few charactersitics of all godo plots {[}Note: This is not an exhaustive list{]}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Clearly-labeled axes.
+  \item
+    Text that are large enough to see.
+  \item
+    Axes that are not misleading.
+  \item
+    Data that are displayed appropriately considering the type of data you have.
+  \end{itemize}
+\end{itemize}
+
+\section{Final exercise}\label{final-exercise-2}
+
+\begin{itemize}
+\item
+  Using the age variable, find the following summary statistics:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    mean
+  \item
+    median
+  \item
+    standard deviation
+  \item
+    skewness
+  \item
+    kurtosis
+  \end{itemize}
+\item
+  Using the age variable, create a histogram with the following features:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    colored bars.
+  \item
+    10 bins {[}Hint: use \texttt{bins} argument{]}.
+  \item
+    a title of ``Age of Children (in months)'' {[}Hint: use \texttt{labs()} function{]}.
+  \end{itemize}
+\end{itemize}
 
 \chapter{Regression and ANOVA}\label{regression-and-anova}
 
-\section{To be updated\ldots{}}\label{to-be-updated-1}
+\section{To be updated\ldots{}}\label{to-be-updated}
 
 Ihnwhi is pondering the best way to teach this section.
 
