@@ -1,5 +1,5 @@
 --- 
-title: "[PSY202A] Statistical Modeling in Psychological Sciences"
+title: "[PSY202A Lab] Statistical Modeling in Psychological Sciences"
 author: "[Ihnwhi Heo, M.Sc.](https://ihnwhiheo.github.io/)"
 date: "Fall 2024"
 description: This GitBook is for guest lectures in PSY202A.
@@ -20,5 +20,7 @@ Hi everyone! I'm Ihnwhi.
 It is my great pleasure to be your guest lecturer for PSY202A.
 
 Statistical modeling is a key component in conducting research in the psychological sciences. While many statistical toolkits are available to researchers, R is arguably one of the most useful free and open-source statistical software programs. It offers a dizzying array of analytic options to answer your important and exciting research questions. In the upcoming four lab sessions, you will be introduced to R and become familiar with its capabilities. These sessions are designed to help you get acquainted with the fundamentals of R and learn how to use it wisely as the next generation of psychologists. You will then be guided through summarizing and analyzing data using R.
+
+I must acknowledge that these materials are the result of the dedication and efforts of many remarkable researchers who have contributed to improving statistics resources. These include Fan Jia, Marieke Visser, Luca Marvin, Terrence Jorgensen, and Sunthud Pornprasertmanit.
 
 Are you ready? Let's get it on!
