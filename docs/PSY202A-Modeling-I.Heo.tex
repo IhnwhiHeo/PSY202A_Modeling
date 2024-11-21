@@ -120,12 +120,12 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={{[}PSY202A{]} Statistical Modeling in Psychological Sciences},
+  pdftitle={{[}PSY202A Lab{]} Statistical Modeling in Psychological Sciences},
   pdfauthor={Ihnwhi Heo, M.Sc.},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{{[}PSY202A{]} Statistical Modeling in Psychological Sciences}
+\title{{[}PSY202A Lab{]} Statistical Modeling in Psychological Sciences}
 \author{\href{https://ihnwhiheo.github.io/}{Ihnwhi Heo, M.Sc.}}
 \date{Fall 2024}
 
@@ -143,6 +143,8 @@ Hi everyone! I'm Ihnwhi.
 It is my great pleasure to be your guest lecturer for PSY202A.
 
 Statistical modeling is a key component in conducting research in the psychological sciences. While many statistical toolkits are available to researchers, R is arguably one of the most useful free and open-source statistical software programs. It offers a dizzying array of analytic options to answer your important and exciting research questions. In the upcoming four lab sessions, you will be introduced to R and become familiar with its capabilities. These sessions are designed to help you get acquainted with the fundamentals of R and learn how to use it wisely as the next generation of psychologists. You will then be guided through summarizing and analyzing data using R.
+
+I must acknowledge that these materials are the result of the dedication and efforts of many remarkable researchers who have contributed to improving statistics resources. These include Fan Jia, Marieke Visser, Luca Marvin, Terrence Jorgensen, and Sunthud Pornprasertmanit.
 
 Are you ready? Let's get it on!
 
@@ -2327,9 +2329,1720 @@ Can you run the code below? What do you see?
 
 \chapter{Regression and ANOVA}\label{regression-and-anova}
 
-\section{To be updated\ldots{}}\label{to-be-updated}
+\section{Your first Ph.D.~statistics course is almost done}\label{your-first-ph.d.-statistics-course-is-almost-done}
 
-Ihnwhi is pondering the best way to teach this section.
+\begin{itemize}
+\tightlist
+\item
+  Keep up the excellent work! You're nearly there!
+\end{itemize}
+
+\includegraphics{./img/nopsy202a.png}
+
+\subsection{Regression vs.~ANOVA}\label{regression-vs.-anova}
+
+\includegraphics{./img/regression_anova_meme.png}
+
+\begin{itemize}
+\item
+  In general, remember that both regression and ANOVA are part of the broader class of general linear models.
+\item
+  The term `general linear model' refers to conventional linear regression models for a continuous response variable given continuous and/or categorical predictors.
+
+  \begin{itemize}
+  \item
+    For your information, the term `generalized linear model' refers to a larger class of models that is assumed to follow an exponential family distribution. See \url{https://online.stat.psu.edu/stat504/lesson/6/6.1}.
+  \item
+    For your additional information, the term `generalized linear mixed model' refers to an even further extension of general linear models that permis random effects as well as fixed effects in the linear predictor. See \url{https://online.stat.psu.edu/stat504/lesson/generalized-linear-mixed-models}.
+  \end{itemize}
+\item
+  Out of curiosity\ldots{} are you familiar with ANCOVA\ldots?
+\end{itemize}
+
+\section{What Do We Do Today?}\label{what-do-we-do-today}
+
+\subsection{Goals}\label{goals}
+
+\begin{itemize}
+\item
+  HW7 (one-way ANOVA) and HW8 (factorial ANOVA) are upcoming. Therefore, we will first discuss ANOVA, focusing on helping you succeed with these assignments.
+\item
+  We will also discuss regression analysis. Let's approach it with a relaxed and review-oriented mindset.
+\end{itemize}
+
+\subsection{Packages}\label{packages-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Initial setting
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Clean the workspace}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{());}\FunctionTok{gc}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+## Ncells 1444103 77.2    2204462 117.8         NA  2204462 117.8
+## Vcells 2532237 19.4    8388608  64.0      16384  4387657  33.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set the working directory}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"/Users/ihnwhiheo/Github/PSY202A\_Modeling"}\NormalTok{)}
+\FunctionTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "/Users/ihnwhiheo/Github/PSY202A_Modeling"
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Let's load R packages that will be used throughout.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# List of packages}
+\NormalTok{packages }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"psych"}\NormalTok{, }\StringTok{"QuantPsyc"}\NormalTok{, }\StringTok{"car"}\NormalTok{, }\StringTok{"apaTables"}\NormalTok{, }\StringTok{"report"}\NormalTok{, }\StringTok{"multcomp"}\NormalTok{,}
+              \StringTok{"palmerpenguins"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"ggformula"}\NormalTok{, }\StringTok{"emmeans"}\NormalTok{) }\CommentTok{\# Add the package names you need}
+
+\CommentTok{\# Check, install, and load each package}
+\ControlFlowTok{for}\NormalTok{ (package\_name }\ControlFlowTok{in}\NormalTok{ packages) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(package\_name, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{)) \{}
+    \FunctionTok{install.packages}\NormalTok{(package\_name, }\AttributeTok{dependencies =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  \}}
+  \FunctionTok{library}\NormalTok{(package\_name, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggformula' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'scales' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'ggridges' was built under R version 4.2.3
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  We will be using with the \texttt{sat.act} dataset in the R \texttt{psych} package.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The dataset consists of self-reported scores of 700 subjects on the SAT Verbal, SAT Quantitative and ACT. Additional variables include age, gender (0=female, 1=male), and education ().
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load data}
+\FunctionTok{data}\NormalTok{(sat.act)}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ sat.act}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  In the original dataset, gender is coded as 1 for males and 2 for females.
+\item
+  The education variable is categorical, ranging from 1 (high school) to 5 (graduate work). For the variables coded as 0, I could not find the exact coding scheme, so we assume that 0 refers to no education.
+\item
+  While the other variables are continuous and require no data preprocessing, we will perform some quick data engineering for gender and education.
+\item
+  Specifically, we will recode gender so that females (originally coded as 2) become the reference category by assigning them a value of 0. Additionally, we will treat the education variable as categorical.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Data engineering}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{gender\_original }\OtherTok{\textless{}{-}}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{gender}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{gender }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{gender }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{education }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{education)}
+
+\CommentTok{\# Quick overview of the data}
+\FunctionTok{head}\NormalTok{(dat, }\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       gender education age ACT SATV SATQ gender_original
+## 29442      0         3  19  24  500  500               2
+## 29457      0         3  23  35  600  500               2
+## 29498      0         3  20  21  480  470               2
+## 29503      1         4  27  26  550  520               1
+## 29504      1         2  33  31  600  550               1
+## 29518      1         5  26  28  640  640               1
+## 29527      0         5  30  36  610  500               2
+## 29529      1         3  19  22  520  560               1
+## 29543      0         4  23  22  400  600               2
+## 29547      0         5  40  35  730  800               2
+## 29578      1         3  23  32  760  710               1
+## 29592      0         4  34  29  710  600               2
+## 29617      1         4  32  21  600  600               1
+## 29619      0         4  41  35  780  725               2
+## 29633      0         3  20  27  640  630               2
+## 29671      0         4  24  27  640  590               2
+## 29676      0         3  19  33  640  650               2
+## 29685      0         4  24  32  700  620               2
+## 29710      1         4  35  28  640  580               1
+## 29711      0         4  46  32  610  680               2
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Shall we look at the descriptive statistics?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Descriptive statistics}
+\FunctionTok{describe}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 vars   n   mean     sd median trimmed    mad min max range
+## gender             1 700   0.35   0.48      0    0.32   0.00   0   1     1
+## education*         2 700   4.16   1.43      4    4.31   1.48   1   6     5
+## age                3 700  25.59   9.50     22   23.86   5.93  13  65    52
+## ACT                4 700  28.55   4.82     29   28.84   4.45   3  36    33
+## SATV               5 700 612.23 112.90    620  619.45 118.61 200 800   600
+## SATQ               6 687 610.22 115.64    620  617.25 118.61 200 800   600
+## gender_original    7 700   1.65   0.48      2    1.68   0.00   1   2     1
+##                  skew kurtosis   se
+## gender           0.61    -1.62 0.02
+## education*      -0.68    -0.07 0.05
+## age              1.64     2.42 0.36
+## ACT             -0.66     0.53 0.18
+## SATV            -0.64     0.33 4.27
+## SATQ            -0.59    -0.02 4.41
+## gender_original -0.61    -1.62 0.02
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  For categorical variables (i.e., gender and education), let's make a table and view the frequencies.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Descriptive statistics}
+\NormalTok{tab }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(}\AttributeTok{Gender =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{gender, }\AttributeTok{Education =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{education)}
+\FunctionTok{addmargins}\NormalTok{(tab)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Education
+## Gender   0   1   2   3   4   5 Sum
+##    0    30  25  21 195  87  95 453
+##    1    27  20  23  80  51  46 247
+##    Sum  57  45  44 275 138 141 700
+\end{verbatim}
+
+\section{One-way ANOVA}\label{one-way-anova}
+
+\subsection{Assumptions}\label{assumptions}
+
+\begin{quote}
+Trailer: You will literally enjoy assumptions in PSY202B with Sarah!
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Normality: We assume that the populations from which the samples were taken are normally distributed.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Numerically, we can check the skewness and kurtosis of the variables. For instance,
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Skewness and kurtosis}
+\FunctionTok{skew}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT) }\CommentTok{\# Little bit negatively skewed (if 0, no skew; if positive, positively skewed)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.6564026
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kurtosi}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT) }\CommentTok{\# Little bit leptokurtic (if 0, mesokurti;, if negative, platykurtic)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5349691
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Visually, we can check the QQ plot. For instance:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# QQ plot}
+\FunctionTok{qqnorm}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT)}
+\FunctionTok{qqline}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-90-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Or simply we can check the histogram.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Histogram}
+\FunctionTok{hist}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-91-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Or we can examine the density plot to compare the distribution of the variable against the ideal normal distribution.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Density plot}
+\FunctionTok{plotNormX}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-92-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Random sampling: We assume that the data we measure were obtained from a sample that we selected using a random sampling procedure.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  We cannot statistically test whether random sampling has occurred. Think about the data collection method you used.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Independence: We assume that the probabilities of each measured outcome in a study are independent or equal.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  For the independence assumption, we cannot test this statistically. Just think about the data collection method you used.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Homogeneity of variance (i.e., homoscedasticity): We assume that the samples were drawn from populations of equal variances.
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Numerically, we can conduct Barlett's or Levene's test.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If significant, the assumption of homogeneity of variances is violated.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Bartlett\textquotesingle{}s test}
+\FunctionTok{bartlett.test}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender, }\AttributeTok{data =}\NormalTok{ dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  ACT by gender
+## Bartlett's K-squared = 1.9164, df = 1, p-value = 0.1663
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bartlett.test}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  ACT by education
+## Bartlett's K-squared = 21.624, df = 5, p-value = 0.0006172
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Levene\textquotesingle{}s test}
+\FunctionTok{leveneTest}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT, }\AttributeTok{group =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in leveneTest.default(dat$ACT, group = dat$gender): dat$gender coerced
+## to factor.
+\end{verbatim}
+
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = median)
+##        Df F value Pr(>F)
+## group   1  0.2899 0.5904
+##       698
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{leveneTest}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{ACT, }\AttributeTok{group =}\NormalTok{ dat}\SpecialCharTok{$}\NormalTok{education)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = median)
+##        Df F value   Pr(>F)   
+## group   5   3.279 0.006194 **
+##       694                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Visually, we can look at the box plots
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Boxplots}
+\FunctionTok{boxplot}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender, }\AttributeTok{data =}\NormalTok{ dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-94-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-94-2.pdf}
+
+\subsection{Analysis}\label{analysis}
+
+\begin{itemize}
+\tightlist
+\item
+  Let's conduct a one-way ANOVA to test whether there are significant mean differences in ACT scores across the different education levels.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Perform a one{-}way ANOVA}
+\NormalTok{model\_oaov }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ dat)}
+
+\CommentTok{\# Print the output}
+\FunctionTok{summary}\NormalTok{(model\_oaov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Df Sum Sq Mean Sq F value  Pr(>F)   
+## education     5    470   93.90   4.126 0.00106 **
+## Residuals   694  15794   22.76                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Make the APA{-}style table}
+\FunctionTok{apa.aov.table}\NormalTok{(model\_oaov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 
+## ANOVA results using ACT as the dependent variable
+##  
+## 
+##    Predictor       SS  df       MS       F    p partial_eta2 CI_90_partial_eta2
+##  (Intercept) 43023.79   1 43023.79 1890.50 .000                                
+##    education   469.50   5    93.90    4.13 .001          .03         [.01, .05]
+##        Error 15793.94 694    22.76                                             
+## 
+## Note: Values in square brackets indicate the bounds of the 90% confidence interval for partial eta-squared
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Describe the result following the APA{-}style; but for reference ONLY!}
+\FunctionTok{report}\NormalTok{(model\_oaov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The ANOVA (formula: ACT ~ education) suggests that:
+## 
+##   - The main effect of education is statistically significant and small (F(5,
+## 694) = 4.13, p = 0.001; Eta2 = 0.03, 95% CI [7.33e-03, 1.00])
+## 
+## Effect sizes were labelled following Field's (2013) recommendations.
+\end{verbatim}
+
+\subsection{Can you explain to me how those results have been obtained?}\label{can-you-explain-to-me-how-those-results-have-been-obtained}
+
+\begin{itemize}
+\tightlist
+\item
+  I'll leave this as food for thought for you!
+\end{itemize}
+
+\subsection{How can we interpret the results?}\label{how-can-we-interpret-the-results}
+
+\begin{itemize}
+\tightlist
+\item
+  According to the ANOVA summary table, the omnibus F-test is statistically significant, as the p-value is below the alpha level of 0.05. This indicates that the null hypothesis of equal population means across the six education groups is rejected. Consequently, we conclude that the six education levels are associated with different ACT scores.
+\end{itemize}
+
+\subsection{Given the results, we are now interested in testing the differences among all the pairs of the means. Because using multiple t-tests can inflate familywise error rates, we will use one of the correction methods. What should we do?}\label{given-the-results-we-are-now-interested-in-testing-the-differences-among-all-the-pairs-of-the-means.-because-using-multiple-t-tests-can-inflate-familywise-error-rates-we-will-use-one-of-the-correction-methods.-what-should-we-do}
+
+\begin{itemize}
+\tightlist
+\item
+  Note that Bonferroni and Holm-Bonferroni are a priori comparison methods. This means they are used when we have a planned set of comparisons before collecting data.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In our case, we did not have such a plan (or did you have something in mind? If then, you are amazing!). Therefore, we will use either Fisher's LSD or Tukey's HSD for post hoc comparisons.
+  \end{itemize}
+\item
+  Fisher's LSD is typically used when there are only three means to compare. This is because, with three means, the family-wise error rate remains controlled at the significance level of alpha.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    However, when comparing more than three means, the overall F-test does not adequately protect the family-wise error rate if the complete null hypothesis is not true but a subset of it is.
+  \end{itemize}
+\item
+  Tukey's HSD, on the other hand, is specifically designed to perform all possible pairwise comparisons. It ensures that the researcher has only a 5\% chance of finding a significant mean difference when the null hypothesis is true.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In the current example, there are 15 comparisons to be made (Can you understand why? If yes, please explain that to me!). Thus, Tukey's HSD is the appropriate method among the four correction techniques.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Tukey\textquotesingle{}s HSD}
+\FunctionTok{TukeyHSD}\NormalTok{(model\_oaov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = ACT ~ education, data = dat)
+## 
+## $education
+##            diff         lwr      upr     p adj
+## 1-0  0.01520468 -2.70335124 2.733761 1.0000000
+## 2-0 -0.49641148 -3.23217649 2.239354 0.9954530
+## 3-0  0.82086124 -1.16316374 2.804886 0.8453156
+## 4-0  1.78718535 -0.35927170 3.933642 0.1648941
+## 5-0  2.12915267 -0.01061924 4.268925 0.0520133
+## 2-1 -0.51161616 -3.40192518 2.378693 0.9959541
+## 3-1  0.80565657 -1.38656404 2.997877 0.9005816
+## 4-1  1.77198068 -0.56826588 4.112227 0.2562269
+## 5-1  2.11394799 -0.22016851 4.448064 0.1015015
+## 3-2  1.31727273 -0.89625276 3.530798 0.5317982
+## 4-2  2.28359684 -0.07661879 4.643812 0.0644453
+## 5-2  2.62556415  0.27142658 4.979702 0.0186900
+## 4-3  0.96632411 -0.45584423 2.388492 0.3775325
+## 5-3  1.30829142 -0.10376689 2.720350 0.0874803
+## 5-4  0.34196731 -1.29046383 1.974398 0.9911202
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Test whether the adjusted p{-}values are lower than 0.05}
+\FunctionTok{TukeyHSD}\NormalTok{(model\_oaov)}\SpecialCharTok{$}\NormalTok{education[,}\DecValTok{4}\NormalTok{] }\SpecialCharTok{\textless{}} \FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   1-0   2-0   3-0   4-0   5-0   2-1   3-1   4-1   5-1   3-2   4-2   5-2   4-3 
+## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE 
+##   5-3   5-4 
+## FALSE FALSE
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The adjusted p-values based on Tukey's HSD indicate a significant difference when comparing the means of group 2 and group 5. Therefore, the group means for 2 and 5 are significantly different.
+\end{itemize}
+
+\subsection{Something more about a priori contrasts and post-hoc comparison}\label{something-more-about-a-priori-contrasts-and-post-hoc-comparison}
+
+\begin{itemize}
+\item
+  For our valuable learning experiences, we can also use other packages for multiple comparisons.
+\item
+  Let's start with the usage of the \texttt{multcomp} package.
+\item
+  The \texttt{glht} function is used to create a test for multiple contrasts. The contrasts can be all-possible pairwise comparisons, which is referred to as ``Tukey'' in this package. Then, the result of multiple contrasts can be summarized and adjusted for familywise error rate.
+\item
+  The Bonferroni method is used in this example. Note that if the test argument is not specified, the single-step approach is used. The adjusted p values is computed from the joint normal or t distribution of the z statistics such that the p value represents the probability of getting at least one significant result by chance if all z or t values are the same in all contrasts. The Tukey method and the single-step approach will provide the same results if the group sizes are equal.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Multiple comparisons}
+\NormalTok{pairwise }\OtherTok{\textless{}{-}} \FunctionTok{glht}\NormalTok{(model\_oaov, }\AttributeTok{linfct =} \FunctionTok{mcp}\NormalTok{(}\AttributeTok{education =} \StringTok{"Tukey"}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(pairwise, }\AttributeTok{test =} \FunctionTok{adjusted}\NormalTok{(}\AttributeTok{type =} \StringTok{"bonferroni"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   Simultaneous Tests for General Linear Hypotheses
+## 
+## Multiple Comparisons of Means: Tukey Contrasts
+## 
+## 
+## Fit: aov(formula = ACT ~ education, data = dat)
+## 
+## Linear Hypotheses:
+##            Estimate Std. Error t value Pr(>|t|)  
+## 1 - 0 == 0   0.0152     0.9513   0.016   1.0000  
+## 2 - 0 == 0  -0.4964     0.9573  -0.519   1.0000  
+## 3 - 0 == 0   0.8209     0.6943   1.182   1.0000  
+## 4 - 0 == 0   1.7872     0.7511   2.379   0.2642  
+## 5 - 0 == 0   2.1292     0.7488   2.844   0.0689 .
+## 2 - 1 == 0  -0.5116     1.0114  -0.506   1.0000  
+## 3 - 1 == 0   0.8057     0.7671   1.050   1.0000  
+## 4 - 1 == 0   1.7720     0.8189   2.164   0.4623  
+## 5 - 1 == 0   2.1139     0.8168   2.588   0.1478  
+## 3 - 2 == 0   1.3173     0.7746   1.701   1.0000  
+## 4 - 2 == 0   2.2836     0.8259   2.765   0.0877 .
+## 5 - 2 == 0   2.6256     0.8238   3.187   0.0225 *
+## 4 - 3 == 0   0.9663     0.4977   1.942   0.7886  
+## 5 - 3 == 0   1.3083     0.4941   2.648   0.1243  
+## 5 - 4 == 0   0.3420     0.5712   0.599   1.0000  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## (Adjusted p values reported -- bonferroni method)
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The simultaneous confidence interval can be computed by the \texttt{confint} function:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Confidence interval}
+\FunctionTok{confint}\NormalTok{(pairwise)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   Simultaneous Confidence Intervals
+## 
+## Multiple Comparisons of Means: Tukey Contrasts
+## 
+## 
+## Fit: aov(formula = ACT ~ education, data = dat)
+## 
+## Quantile = 2.8293
+## 95% family-wise confidence level
+##  
+## 
+## Linear Hypotheses:
+##            Estimate lwr      upr     
+## 1 - 0 == 0  0.01520 -2.67634  2.70675
+## 2 - 0 == 0 -0.49641 -3.20500  2.21218
+## 3 - 0 == 0  0.82086 -1.14345  2.78518
+## 4 - 0 == 0  1.78719 -0.33795  3.91232
+## 5 - 0 == 0  2.12915  0.01064  4.24767
+## 2 - 1 == 0 -0.51162 -3.37321  2.34998
+## 3 - 1 == 0  0.80566 -1.36479  2.97610
+## 4 - 1 == 0  1.77198 -0.54502  4.08898
+## 5 - 1 == 0  2.11395 -0.19698  4.42488
+## 3 - 2 == 0  1.31727 -0.87426  3.50881
+## 4 - 2 == 0  2.28360 -0.05317  4.62036
+## 5 - 2 == 0  2.62556  0.29481  4.95631
+## 4 - 3 == 0  0.96632 -0.44172  2.37436
+## 5 - 3 == 0  1.30829 -0.08974  2.70632
+## 5 - 4 == 0  0.34197 -1.27425  1.95818
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{confint}\NormalTok{(pairwise))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-99-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Instead of post hoc comparison, researchers may have a priori contrasts from their research hypotheses. For example, researchers expect a linear trend in the impact of education on ACT score. The contrast coefficient of the linear trend for six groups can be created:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Contrast}
+\NormalTok{ctr }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{2.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{1.5}\NormalTok{, }\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\FloatTok{2.5}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  The polynomial contrast coefficient is based on Table A10 in Maxwell and Delaney (2004). The contrast is specified in a matrix where rows represent different contrasts and columns represent the coefficient of each group. The contrast can be evaluated using the glht function from the \texttt{multcomp} package:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Simultanoues tests for general linear hypotheses}
+\NormalTok{linear }\OtherTok{\textless{}{-}} \FunctionTok{glht}\NormalTok{(model\_oaov, }\AttributeTok{linfct =} \FunctionTok{mcp}\NormalTok{(}\AttributeTok{education =}\NormalTok{ ctr))}
+\FunctionTok{summary}\NormalTok{(linear)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   Simultaneous Tests for General Linear Hypotheses
+## 
+## Multiple Comparisons of Means: User-defined Contrasts
+## 
+## 
+## Fit: aov(formula = ACT ~ education, data = dat)
+## 
+## Linear Hypotheses:
+##        Estimate Std. Error t value Pr(>|t|)    
+## 1 == 0    8.639      2.272   3.802 0.000156 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## (Adjusted p values reported -- single-step method)
+\end{verbatim}
+
+\begin{itemize}
+\item
+  The contrast is provided in the \texttt{linfct} argument. Because only one contrast is tested, the familywise error rate correction is not needed.
+\item
+  Next, all polynomial contrasts up to the fifth order are investigated for the difference in ACT between education levels:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Different contrasts as examples}
+\NormalTok{linear }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{quadratic }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{cubic }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{4}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{7}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{quartic }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{quintic }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\DecValTok{10}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{mctr }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(linear, quadratic, cubic, quartic, quintic)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  As mentioned above, the row of the contrast matrix represents different contrasts. The matrix of multiple contrasts can be used in the glht function:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Multiple testing}
+\NormalTok{polynomial }\OtherTok{\textless{}{-}} \FunctionTok{glht}\NormalTok{(model\_oaov, }\AttributeTok{linfct =} \FunctionTok{mcp}\NormalTok{(}\AttributeTok{education =}\NormalTok{ mctr))}
+\FunctionTok{summary}\NormalTok{(polynomial, }\AttributeTok{test=}\FunctionTok{adjusted}\NormalTok{(}\AttributeTok{type =} \StringTok{"bonferroni"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   Simultaneous Tests for General Linear Hypotheses
+## 
+## Multiple Comparisons of Means: User-defined Contrasts
+## 
+## 
+## Fit: aov(formula = ACT ~ education, data = dat)
+## 
+## Linear Hypotheses:
+##                Estimate Std. Error t value Pr(>|t|)    
+## linear == 0      17.279      4.544   3.802  0.00078 ***
+## quadratic == 0    7.546      4.928   1.531  0.63099    
+## cubic == 0       -7.027      7.515  -0.935  1.00000    
+## quartic == 0     -2.629      2.999  -0.877  1.00000    
+## quintic == 0      6.442      8.793   0.733  1.00000    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## (Adjusted p values reported -- bonferroni method)
+\end{verbatim}
+
+\section{Factorial ANOVA}\label{factorial-anova}
+
+\begin{itemize}
+\tightlist
+\item
+  Shall we use a different dataset this time?
+\end{itemize}
+
+\includegraphics{./img/penguines.png}
+
+\begin{itemize}
+\item
+  Here, assume we are interested in testing whether there are significant mean differences in body mass across the different species and sex levels.
+\item
+  There are three different types for the species variable and two levels for the sex variable.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use penguins data}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ penguins}
+
+\CommentTok{\# Quick look at the data}
+\FunctionTok{str}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [344 x 8] (S3: tbl_df/tbl/data.frame)
+##  $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ island           : Factor w/ 3 levels "Biscoe","Dream",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ bill_length_mm   : num [1:344] 39.1 39.5 40.3 NA 36.7 39.3 38.9 39.2 34.1 42 ...
+##  $ bill_depth_mm    : num [1:344] 18.7 17.4 18 NA 19.3 20.6 17.8 19.6 18.1 20.2 ...
+##  $ flipper_length_mm: int [1:344] 181 186 195 NA 193 190 181 195 193 190 ...
+##  $ body_mass_g      : int [1:344] 3750 3800 3250 NA 3450 3650 3625 4675 3475 4250 ...
+##  $ sex              : Factor w/ 2 levels "female","male": 2 1 1 NA 1 2 1 2 NA NA ...
+##  $ year             : int [1:344] 2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{describe}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   vars   n    mean     sd  median trimmed    mad    min    max
+## species*             1 344    1.92   0.89    2.00    1.90   1.48    1.0    3.0
+## island*              2 344    1.66   0.73    2.00    1.58   1.48    1.0    3.0
+## bill_length_mm       3 342   43.92   5.46   44.45   43.91   7.04   32.1   59.6
+## bill_depth_mm        4 342   17.15   1.97   17.30   17.17   2.22   13.1   21.5
+## flipper_length_mm    5 342  200.92  14.06  197.00  200.34  16.31  172.0  231.0
+## body_mass_g          6 342 4201.75 801.95 4050.00 4154.01 889.56 2700.0 6300.0
+## sex*                 7 333    1.50   0.50    2.00    1.51   0.00    1.0    2.0
+## year                 8 344 2008.03   0.82 2008.00 2008.04   1.48 2007.0 2009.0
+##                    range  skew kurtosis    se
+## species*             2.0  0.16    -1.73  0.05
+## island*              2.0  0.61    -0.91  0.04
+## bill_length_mm      27.5  0.05    -0.89  0.30
+## bill_depth_mm        8.4 -0.14    -0.92  0.11
+## flipper_length_mm   59.0  0.34    -1.00  0.76
+## body_mass_g       3600.0  0.47    -0.74 43.36
+## sex*                 1.0 -0.02    -2.01  0.03
+## year                 2.0 -0.05    -1.51  0.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       species          island    bill_length_mm  bill_depth_mm  
+##  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+##  Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+##  Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+##                                  Mean   :43.92   Mean   :17.15  
+##                                  3rd Qu.:48.50   3rd Qu.:18.70  
+##                                  Max.   :59.60   Max.   :21.50  
+##                                  NA's   :2       NA's   :2      
+##  flipper_length_mm  body_mass_g       sex           year     
+##  Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
+##  1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
+##  Median :197.0     Median :4050   NA's  : 11   Median :2008  
+##  Mean   :200.9     Mean   :4202                Mean   :2008  
+##  3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
+##  Max.   :231.0     Max.   :6300                Max.   :2009  
+##  NA's   :2         NA's   :2
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  For the ease of interpretation and implementation, I excluded penguins where the sex variable is missing:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Data engineering for exclusing cases where sex variable is missing}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(sex))}
+
+\CommentTok{\# Quick look at the modified data}
+\FunctionTok{str}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [333 x 8] (S3: tbl_df/tbl/data.frame)
+##  $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ island           : Factor w/ 3 levels "Biscoe","Dream",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ bill_length_mm   : num [1:333] 39.1 39.5 40.3 36.7 39.3 38.9 39.2 41.1 38.6 34.6 ...
+##  $ bill_depth_mm    : num [1:333] 18.7 17.4 18 19.3 20.6 17.8 19.6 17.6 21.2 21.1 ...
+##  $ flipper_length_mm: int [1:333] 181 186 195 193 190 181 195 182 191 198 ...
+##  $ body_mass_g      : int [1:333] 3750 3800 3250 3450 3650 3625 4675 3200 3800 4400 ...
+##  $ sex              : Factor w/ 2 levels "female","male": 2 1 1 1 2 1 2 1 2 2 ...
+##  $ year             : int [1:333] 2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{describe}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   vars   n    mean     sd median trimmed    mad    min    max
+## species*             1 333    1.92   0.89    2.0    1.90   1.48    1.0    3.0
+## island*              2 333    1.65   0.71    2.0    1.57   1.48    1.0    3.0
+## bill_length_mm       3 333   43.99   5.47   44.5   43.98   6.97   32.1   59.6
+## bill_depth_mm        4 333   17.16   1.97   17.3   17.19   2.22   13.1   21.5
+## flipper_length_mm    5 333  200.97  14.02  197.0  200.36  16.31  172.0  231.0
+## body_mass_g          6 333 4207.06 805.22 4050.0 4159.46 889.56 2700.0 6300.0
+## sex*                 7 333    1.50   0.50    2.0    1.51   0.00    1.0    2.0
+## year                 8 333 2008.04   0.81 2008.0 2008.05   1.48 2007.0 2009.0
+##                    range  skew kurtosis    se
+## species*             2.0  0.16    -1.72  0.05
+## island*              2.0  0.62    -0.85  0.04
+## bill_length_mm      27.5  0.04    -0.90  0.30
+## bill_depth_mm        8.4 -0.15    -0.91  0.11
+## flipper_length_mm   59.0  0.36    -0.98  0.77
+## body_mass_g       3600.0  0.47    -0.75 44.13
+## sex*                 1.0 -0.02    -2.01  0.03
+## year                 2.0 -0.08    -1.49  0.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       species          island    bill_length_mm  bill_depth_mm  
+##  Adelie   :146   Biscoe   :163   Min.   :32.10   Min.   :13.10  
+##  Chinstrap: 68   Dream    :123   1st Qu.:39.50   1st Qu.:15.60  
+##  Gentoo   :119   Torgersen: 47   Median :44.50   Median :17.30  
+##                                  Mean   :43.99   Mean   :17.16  
+##                                  3rd Qu.:48.60   3rd Qu.:18.70  
+##                                  Max.   :59.60   Max.   :21.50  
+##  flipper_length_mm  body_mass_g       sex           year     
+##  Min.   :172       Min.   :2700   female:165   Min.   :2007  
+##  1st Qu.:190       1st Qu.:3550   male  :168   1st Qu.:2007  
+##  Median :197       Median :4050                Median :2008  
+##  Mean   :201       Mean   :4207                Mean   :2008  
+##  3rd Qu.:213       3rd Qu.:4775                3rd Qu.:2009  
+##  Max.   :231       Max.   :6300                Max.   :2009
+\end{verbatim}
+
+\subsection{How can we characterize this design?}\label{how-can-we-characterize-this-design}
+
+\begin{itemize}
+\item
+  There are two factors in this study. The first factor is species, and the second factor is sex. Species has three levels (Adelie, Chinstrap, and Gentoo), and sex has two levels (female and male). In total, there are six combinations formed by the three levels of species and the two levels of sex, with penguins assigned to all six combinations. This indicates that the current study employs a \(3 \times 2\) factorial design. For this design, a two-way ANOVA should be conducted. The three null hypotheses being tested are as follows:
+\item
+  \(H_0\) (regarding species): Species does not have a significant main effect on body mass (group means on body mass across the three levels of species are not different).
+\item
+  \(H_0\) (regarding sex): Sex does not have a significant main effect on body mass (group means on body mass across the two levels of sex are not different).
+\item
+  \(H_0\) (regarding interaction): There is no significant interaction between species and sex on body mass.
+\end{itemize}
+
+\subsection{Cells means for the data}\label{cells-means-for-the-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Mean by groups in a wide format}
+\NormalTok{dat.tab }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(species, sex) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_bodymass =} \FunctionTok{mean}\NormalTok{(body\_mass\_g)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{spread}\NormalTok{(sex, mean\_bodymass)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'species'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add the marginal means for species}
+\NormalTok{dat.tab}\SpecialCharTok{$}\NormalTok{Means }\OtherTok{\textless{}{-}} \FunctionTok{rowMeans}\NormalTok{(dat.tab[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+
+\CommentTok{\# Add the marginal means for sex}
+\NormalTok{col\_means }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{colMeans}\NormalTok{(dat.tab[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]))}
+\NormalTok{dat.tab }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(dat.tab, col\_means)}
+\NormalTok{dat.tab}\SpecialCharTok{$}\NormalTok{species }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Adelie"}\NormalTok{, }\StringTok{"Chinstrap"}\NormalTok{, }\StringTok{"Gentoo"}\NormalTok{, }\StringTok{"Means"}\NormalTok{)}
+
+\CommentTok{\# Print the table}
+\NormalTok{dat.tab}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 4
+## # Groups:   species [4]
+##   species   female  male Means
+##   <chr>      <dbl> <dbl> <dbl>
+## 1 Adelie     3369. 4043. 3706.
+## 2 Chinstrap  3527. 3939. 3733.
+## 3 Gentoo     4680. 5485. 5082.
+## 4 Means      3859. 4489. 4174.
+\end{verbatim}
+
+\begin{itemize}
+\item
+  Can you understand the means by groups? In particular:
+
+  \begin{itemize}
+  \item
+    Can you find any simple effect? (i.e., the effect of one IV at a specific level of the other IV)
+  \item
+    Can you find any main effect? (i.e., the average effect of the IV across the levels of all other IVs)
+  \item
+    Can you find any interaction effect? (i.e., the simple effects of one IV are not constant across all levels of the other IV; there is a differential effect)
+  \end{itemize}
+\end{itemize}
+
+\subsection{Visualizing cell means}\label{visualizing-cell-means}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Jittered scatterplot with mean and SE}
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{y =}\NormalTok{ body\_mass\_g)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{sex) }\SpecialCharTok{+}
+  \FunctionTok{stat\_summary}\NormalTok{(}\AttributeTok{fun.dat =} \StringTok{"mean\_se"}\NormalTok{, }\AttributeTok{geom =} \StringTok{"errorbar"}\NormalTok{, }\AttributeTok{wide =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{stat\_summary}\NormalTok{(}\AttributeTok{fun.dat =} \StringTok{"mean\_se"}\NormalTok{, }\AttributeTok{geom =} \StringTok{"pointrange"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{cex =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{pch =} \FloatTok{1.0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in stat_summary(fun.dat = "mean_se", geom = "errorbar", wide = 0.5):
+## Ignoring unknown parameters: `fun.dat` and `wide`
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in stat_summary(fun.dat = "mean_se", geom = "pointrange"): Ignoring
+## unknown parameters: `fun.dat`
+\end{verbatim}
+
+\begin{verbatim}
+## No summary function supplied, defaulting to `mean_se()`
+## No summary function supplied, defaulting to `mean_se()`
+## No summary function supplied, defaulting to `mean_se()`
+## No summary function supplied, defaulting to `mean_se()`
+\end{verbatim}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-107-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  What can you observe from the plot?
+\end{itemize}
+
+\subsection{Analysis}\label{analysis-1}
+
+Let's conduct a two-way ANOVA to test whether there are mean differences in body mass across the different species and sex levels.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Perform a two{-}way ANOVA}
+\CommentTok{\# Both of the code below do the same job}
+\NormalTok{model\_taov }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ species }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ species}\SpecialCharTok{:}\NormalTok{sex, }\AttributeTok{data =}\NormalTok{ dat)}
+\DocumentationTok{\#\# The colon represents the interaction effect only}
+
+\NormalTok{model\_taov }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ species}\SpecialCharTok{*}\NormalTok{sex, }\AttributeTok{data =}\NormalTok{ dat)}
+\DocumentationTok{\#\# The asterisk represents the interaction effect and the main effect of each variable}
+\DocumentationTok{\#\# (and all lower{-}order interactions)}
+
+\CommentTok{\# Results}
+\FunctionTok{summary}\NormalTok{(model\_taov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Df    Sum Sq  Mean Sq F value   Pr(>F)    
+## species       2 145190219 72595110 758.358  < 2e-16 ***
+## sex           1  37090262 37090262 387.460  < 2e-16 ***
+## species:sex   2   1676557   838278   8.757 0.000197 ***
+## Residuals   327  31302628    95727                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Make the APA{-}style table}
+\FunctionTok{apa.aov.table}\NormalTok{(model\_taov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 
+## ANOVA results using body_mass_g as the dependent variable
+##  
+## 
+##      Predictor           SS  df           MS       F    p partial_eta2
+##    (Intercept) 828480898.97   1 828480898.97 8654.65 .000             
+##        species  60350016.02   2  30175008.01  315.22 .000          .66
+##            sex  16613441.78   1  16613441.78  173.55 .000          .35
+##  species x sex   1676556.74   2    838278.37    8.76 .000          .05
+##          Error  31302628.28 327     95726.69                          
+##  CI_90_partial_eta2
+##                    
+##          [.61, .69]
+##          [.28, .41]
+##          [.02, .09]
+##                    
+## 
+## Note: Values in square brackets indicate the bounds of the 90% confidence interval for partial eta-squared
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Describe the result following the APA{-}style; but for reference ONLY!}
+\FunctionTok{report}\NormalTok{(model\_taov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The ANOVA (formula: body_mass_g ~ species * sex) suggests that:
+## 
+##   - The main effect of species is statistically significant and large (F(2, 327)
+## = 758.36, p < .001; Eta2 (partial) = 0.82, 95% CI [0.80, 1.00])
+##   - The main effect of sex is statistically significant and large (F(1, 327) =
+## 387.46, p < .001; Eta2 (partial) = 0.54, 95% CI [0.49, 1.00])
+##   - The interaction between species and sex is statistically significant and
+## small (F(2, 327) = 8.76, p < .001; Eta2 (partial) = 0.05, 95% CI [0.02, 1.00])
+## 
+## Effect sizes were labelled following Field's (2013) recommendations.
+\end{verbatim}
+
+\subsection{Can you explain to me how those results have been obtained?}\label{can-you-explain-to-me-how-those-results-have-been-obtained-1}
+
+\begin{itemize}
+\tightlist
+\item
+  I'll leave this as food for thought for you!
+\end{itemize}
+
+\subsection{How can we interpret the results?}\label{how-can-we-interpret-the-results-1}
+
+\begin{itemize}
+\item
+  Let's use an alpha level of 0.05 as the significance threshold. According to the results, the p-value for species is lower than the significance level, indicating that species has a significant effect on body mass. In other words, the group means for body mass differ significantly across the three species.
+\item
+  The p-value for sex is also below the alpha level of 0.05, suggesting that sex has a significant effect on body mass. In other words, there are differences in body mass between female and male penguins.
+\item
+  Lastly, the p-value for the interaction between species and sex (denoted as species:sex in the output) is below the significance threshold. This indicates a significant interaction between species and sex. That is, the effect of species on body mass is not consistent across the levels of sex, as observed in the plot above.
+\end{itemize}
+
+\subsection{What to do with the interaction effect?}\label{what-to-do-with-the-interaction-effect}
+
+\begin{itemize}
+\item
+  The interaction in the analysis suggests that it would be beneficial to examine the simple effects. The next step is to analyze the differences in body mass due to species within each level of sex.
+
+  \begin{itemize}
+  \item
+    To do this, we will split the dataset and conduct a separate analysis for each level of sex.
+  \item
+    Importantly, to do this, we use the mean-squared-within (i.e., \(\text{MS}_{\text{within}}\)) from the full data to compute the F value, and then use the \texttt{pf} function to find the p-value.
+  \item
+    To control the overall Type I error rate, we will use an alpha level of 0.025 for each test.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{What are you talking about, Ihnwhi\ldots?}\label{what-are-you-talking-about-ihnwhi}
+
+\includegraphics{./img/slide.png}
+
+\begin{itemize}
+\tightlist
+\item
+  Let's proceed with the analyses!
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Split data}
+\DocumentationTok{\#\# female}
+\NormalTok{dat\_f }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(dat, sex }\SpecialCharTok{==} \StringTok{"female"}\NormalTok{)}
+\NormalTok{model\_taov\_f }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ species, }\AttributeTok{data =}\NormalTok{ dat\_f)}
+\FunctionTok{summary}\NormalTok{(model\_taov\_f)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Df   Sum Sq  Mean Sq F value Pr(>F)    
+## species       2 60350016 30175008   393.2 <2e-16 ***
+## Residuals   162 12430757    76733                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# MS\_between from the subset of data}
+\NormalTok{MS\_b\_f }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov\_f)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+
+\CommentTok{\# df\_between frmo the subset of data}
+\NormalTok{df\_b\_f }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov\_f)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# MS\_within from the full data}
+\NormalTok{MS\_w }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+
+\CommentTok{\# df\_within from the full data}
+\NormalTok{df\_w }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# Calculate the F{-}value}
+\NormalTok{F\_f }\OtherTok{\textless{}{-}}\NormalTok{ MS\_b\_f}\SpecialCharTok{/}\NormalTok{MS\_w}
+
+\CommentTok{\# Obtain the p{-}value}
+\NormalTok{p\_f }\OtherTok{\textless{}{-}} \FunctionTok{pf}\NormalTok{(F\_f, }\AttributeTok{df1 =}\NormalTok{ df\_b\_f, }\AttributeTok{df2 =}\NormalTok{ df\_w, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Make a statistical decision {-} Is p{-}value lower than the adjusted alpha?}
+\NormalTok{p\_f }\SpecialCharTok{\textless{}} \FloatTok{0.025}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{itemize}
+\item
+  The results indicate that the p-value is lower than the adjusted alpha level of 0.025 based on Bonferroni's correction. This suggests that there are significant mean differences across the three levels of species when the level of sex is female.
+\item
+  We do the same for the subset of the data where the level of sex is male.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Split data}
+\DocumentationTok{\#\# male}
+\NormalTok{dat\_m }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(dat, sex }\SpecialCharTok{==} \StringTok{"male"}\NormalTok{)}
+\NormalTok{model\_taov\_m }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ species, }\AttributeTok{data =}\NormalTok{ dat\_m)}
+\FunctionTok{summary}\NormalTok{(model\_taov\_m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Df   Sum Sq  Mean Sq F value Pr(>F)    
+## species       2 84728125 42364062   370.4 <2e-16 ***
+## Residuals   165 18871872   114375                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# MS\_between from the subset of data}
+\NormalTok{MS\_b\_m }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov\_m)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+
+\CommentTok{\# df\_between frmo the subset of data}
+\NormalTok{df\_b\_m }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov\_m)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# MS\_within from the full data}
+\NormalTok{MS\_w }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+
+\CommentTok{\# df\_within from the full data}
+\NormalTok{df\_w }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model\_taov)[[}\DecValTok{1}\NormalTok{]][}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{]}
+
+\CommentTok{\# Calculate the F{-}value}
+\NormalTok{F\_m }\OtherTok{\textless{}{-}}\NormalTok{ MS\_b\_m}\SpecialCharTok{/}\NormalTok{MS\_w}
+
+\CommentTok{\# Obtain the p{-}value}
+\NormalTok{p\_m }\OtherTok{\textless{}{-}} \FunctionTok{pf}\NormalTok{(F\_m, }\AttributeTok{df1 =}\NormalTok{ df\_b\_m, }\AttributeTok{df2 =}\NormalTok{ df\_w, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Make a statistical decision {-} Is p{-}value lower than the adjusted alpha?}
+\NormalTok{p\_m }\SpecialCharTok{\textless{}} \FloatTok{0.025}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Similarly, the p-value is lower than the adjusted alpha level of 0.025 based on Bonferroni's correction. This indicates that there are significant mean differences across the three levels of species when the level of sex is male.
+\end{itemize}
+
+\subsection{This time, let's use pairwise comparison with Tukey's HSD to elaborate on the results of F.}\label{this-time-lets-use-pairwise-comparison-with-tukeys-hsd-to-elaborate-on-the-results-of-f.}
+
+\begin{itemize}
+\tightlist
+\item
+  We will use the \texttt{lsmeans()} function to perform pairwise comparisons based on Tukey's HSD.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Pairwise comparison}
+\FunctionTok{lsmeans}\NormalTok{(model\_taov, pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ species, }\AttributeTok{by =} \StringTok{"sex"}\NormalTok{, }\AttributeTok{adjust =} \StringTok{"tukey"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $lsmeans
+## sex = female:
+##  species   lsmean   SE  df lower.CL upper.CL
+##  Adelie      3369 36.2 327     3298     3440
+##  Chinstrap   3527 53.1 327     3423     3632
+##  Gentoo      4680 40.6 327     4600     4760
+## 
+## sex = male:
+##  species   lsmean   SE  df lower.CL upper.CL
+##  Adelie      4043 36.2 327     3972     4115
+##  Chinstrap   3939 53.1 327     3835     4043
+##  Gentoo      5485 39.6 327     5407     5563
+## 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+## sex = female:
+##  contrast           estimate   SE  df t.ratio p.value
+##  Adelie - Chinstrap     -158 64.2 327  -2.465  0.0377
+##  Adelie - Gentoo       -1311 54.4 327 -24.088  <.0001
+##  Chinstrap - Gentoo    -1153 66.8 327 -17.246  <.0001
+## 
+## sex = male:
+##  contrast           estimate   SE  df t.ratio p.value
+##  Adelie - Chinstrap      105 64.2 327   1.627  0.2357
+##  Adelie - Gentoo       -1441 53.7 327 -26.855  <.0001
+##  Chinstrap - Gentoo    -1546 66.2 327 -23.345  <.0001
+## 
+## P value adjustment: tukey method for comparing a family of 3 estimates
+\end{verbatim}
+
+\begin{itemize}
+\item
+  Can you understand the results? Focus on the \texttt{\$contrasts} section!
+\item
+  Can you expand on your results? Feel free to refer to the lecture slides for a template to guide your write-up.
+\end{itemize}
+
+\section{Regression analysis}\label{regression-analysis}
+
+\begin{itemize}
+\item
+  \textbf{Purpose of Regression Analysis}: Regression analysis is a statistical method used to examine the relationship between a dependent variable (outcome) and one or more independent variables (predictors). It helps quantify the strength and direction of these relationships.
+\item
+  \textbf{Key Objective}: The primary goal is to model the relationship between variables, allowing researchers to explain variations in the dependent variable and make predictions about future or unobserved data points.
+\item
+  \textbf{Types of Regression}: Regression analysis comes in various forms, such as simple regression (one predictor), multiple regression (multiple predictors), and specialized models (e.g., logistic regression for binary outcomes or polynomial regression for nonlinear relationships).
+\item
+  \textbf{Assumptions and Applications}: Regression models rely on assumptions such as linearity, independence, homoscedasticity, and normality of residuals. It is widely applied in fields like psychology, economics, and engineering to analyze trends, test hypotheses, and predict outcomes. You will have a deeper understanding into the assumptions in PSY202B with Sarah!
+\item
+  \textbf{Tips When Programming}: Be sure to differentiate what is regression on others!
+\end{itemize}
+
+\subsection{Simple regression analysis}\label{simple-regression-analysis}
+
+\begin{itemize}
+\item
+  A simple regression model is used to describe the relationship between two variables: an independent variable (IV) and a dependent variable (DV).
+\item
+  The research question addressed by simple regression is whether the IV has an effect on the DV. If a significant effect is found, the model can be used to predict DV values for new IV values.
+\item
+  Assuming a linear relationship between the two variables, the mathematical expression for a simple regression model is \(y_i = b_0 + b_1x_i + \varepsilon_i\), where \(b_0\) and \(b_1\) are the regression coefficients (intercept and slope, respectively), and \(\varepsilon_i\) represents the error term.
+\item
+  The DV must be a continuous variable, while the IV can be either continuous or categorical.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    For example, one-way ANOVA is a special case of simple regression, where the IV is categorical.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Simple regression analysis with a continuous predictor}\label{simple-regression-analysis-with-a-continuous-predictor}
+
+\begin{itemize}
+\item
+  Say our goal is to predict the ACT score using age through a simple regression analysis.
+\item
+  What would be the null hypothesis?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Use the sat{-}act data again}
+\NormalTok{dat\_satact }\OtherTok{\textless{}{-}}\NormalTok{ sat.act}
+
+\CommentTok{\# Simple regression analysis, with a continuous predictor}
+\NormalTok{model\_reg\_s\_cont }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ dat\_satact)}
+\FunctionTok{summary}\NormalTok{(model\_reg\_s\_cont)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = ACT ~ age, data = dat_satact)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -25.3454  -3.1874   0.4301   3.6546   7.9915 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 27.11035    0.52148  51.988  < 2e-16 ***
+## age          0.05614    0.01910   2.939  0.00341 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.797 on 698 degrees of freedom
+## Multiple R-squared:  0.01222,    Adjusted R-squared:  0.01081 
+## F-statistic: 8.635 on 1 and 698 DF,  p-value: 0.003406
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Can you understand the output and interpret the result?
+\end{itemize}
+
+\subsubsection{Simple regression analysis with a categorical predictor}\label{simple-regression-analysis-with-a-categorical-predictor}
+
+\begin{itemize}
+\tightlist
+\item
+  This time, say we would like to predict the ACT score using education through a simple regression analysis.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Simple regression analysis, with a continuous predictor}
+\NormalTok{model\_reg\_s\_cate }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}} \FunctionTok{as.factor}\NormalTok{(education), }\AttributeTok{data =}\NormalTok{ dat\_satact)}
+\FunctionTok{summary}\NormalTok{(model\_reg\_s\_cate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = ACT ~ as.factor(education), data = dat_satact)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -23.9773  -3.2945   0.5263   3.7055   9.0227 
+## 
+## Coefficients:
+##                       Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            27.4737     0.6319  43.480  < 2e-16 ***
+## as.factor(education)1   0.0152     0.9513   0.016  0.98725    
+## as.factor(education)2  -0.4964     0.9573  -0.519  0.60425    
+## as.factor(education)3   0.8209     0.6943   1.182  0.23748    
+## as.factor(education)4   1.7872     0.7511   2.379  0.01761 *  
+## as.factor(education)5   2.1292     0.7488   2.844  0.00459 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.771 on 694 degrees of freedom
+## Multiple R-squared:  0.02887,    Adjusted R-squared:  0.02187 
+## F-statistic: 4.126 on 5 and 694 DF,  p-value: 0.001063
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Can you notice something from the above results compared to what we did as below?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Perform a one{-}way ANOVA}
+\NormalTok{model\_oaov }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(ACT }\SpecialCharTok{\textasciitilde{}}\NormalTok{ education, }\AttributeTok{data =}\NormalTok{ dat\_satact)}
+
+\CommentTok{\# Print the output}
+\FunctionTok{summary}\NormalTok{(model\_oaov)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              Df Sum Sq Mean Sq F value   Pr(>F)    
+## education     1    390   389.9   17.14 3.89e-05 ***
+## Residuals   698  15874    22.7                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\subsection{Multiple regression analysis}\label{multiple-regression-analysis}
+
+\begin{itemize}
+\tightlist
+\item
+  Multiple linear regression allows more than one IVs to predict the dependent variable (DV). To examine effects of multiple IVs on the DV, we can simply add IVs in the linear model, \(y_i = b_0 + b_1 x_{1i} + b_2 x_{2i} + \cdots + b_p x_{pi} + \varepsilon_i\).
+\end{itemize}
+
+\subsubsection{Multiple regression analysis with two continuous variables}\label{multiple-regression-analysis-with-two-continuous-variables}
+
+\begin{itemize}
+\item
+  Say our goal is to predict the body mass of penguins using flipper length and bill depth through a multiple regression analysis.
+\item
+  What would be the null hypothesis?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load data again}
+\NormalTok{dat\_penguin }\OtherTok{\textless{}{-}}\NormalTok{ penguins}
+
+\CommentTok{\# Multiple regression analysis}
+\NormalTok{model\_reg\_m\_1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ flipper\_length\_mm }\SpecialCharTok{+}\NormalTok{ bill\_depth\_mm, }\AttributeTok{data =}\NormalTok{ dat\_penguin)}
+\FunctionTok{summary}\NormalTok{(model\_reg\_m\_1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass_g ~ flipper_length_mm + bill_depth_mm, 
+##     data = dat_penguin)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1029.78  -271.45   -23.58   245.15  1275.97 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       -6541.907    540.751 -12.098   <2e-16 ***
+## flipper_length_mm    51.541      1.865  27.635   <2e-16 ***
+## bill_depth_mm        22.634     13.280   1.704   0.0892 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 393.2 on 339 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.761,  Adjusted R-squared:  0.7596 
+## F-statistic: 539.8 on 2 and 339 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Can you understand the output and interpret the result?
+\end{itemize}
+
+\subsubsection{Model diagnostics for multiple regression analysis}\label{model-diagnostics-for-multiple-regression-analysis}
+
+\begin{quote}
+Trailer: Again, much more in Sarah's PSY202B!
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  For the purpose of diagnosing model assumptions, we can check four diagnostic plots: (1) residuals vs.~fitted, (2) normal Q-Q, (3) scale-loation, (4) Cook's distance, and (5) residuals vs.~leverage.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model diagnostics using visual tools}
+\FunctionTok{plot}\NormalTok{(model\_reg\_m\_1, }\AttributeTok{which =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-118-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  A visual examination of the residuals vs.~fitted plot indicates that there is equal variance along the line of best fit (i.e., regression line). Therefore, the assumption of homoscedasticity is met. In addition, the points are randomly scattered across the place, and there are no discernible nonlinear trends. This means that the assumption of linearity is also met.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model diagnostics using visual tools}
+\FunctionTok{plot}\NormalTok{(model\_reg\_m\_1, }\AttributeTok{which =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-119-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  The Q-Q plot shows that there is a slight deviation in the lower-left corner, but this is not severe and looks okay. Also, most of the data points hover around the normal line. Thus, the normality assumption is met.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model diagnostics using visual tools}
+\FunctionTok{plot}\NormalTok{(model\_reg\_m\_1, }\AttributeTok{which =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-120-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  The scale-location plot tells us whether the assumption of homoscedasticity is satisfied or violated. If a model satisfies this assumption, the points should ideally be equally spread around the red horizontal line. According to the plot, the red horizontal line is fairly flat, which suggests that the assumption of homoscedasticity is met. While observations such as 40, 166, and 170 deviate slightly more, I do not believe this indicates a severe violation of the homoscedasticity assumption.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model diagnostics using visual tools}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(model\_reg\_m\_1, }\AttributeTok{which =} \DecValTok{4}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(model\_reg\_m\_1, }\AttributeTok{which =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{PSY202A-Modeling-I.Heo_files/figure-latex/unnamed-chunk-121-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  To diagnose the existence of influential points that can alter the results of the regression analysis upon the inclusion or exclusion of a value, I checked the Cook's distance plot and the residuals vs.~leverage plot. Cook's distance measures the influence of each data point on the fitted model. Larger values of Cook's distance, such as those greater than 0.5, indicate more influential points. According to the Cook's distance plot, values from observations 40, 170, 166 could be influential, so those values are worthy of closer scrutiny.
+\item
+  I checked the residuals vs.~leverage plot. According to this plot, observations with standardized residuals greater than 3 in absolute value are possible outliers. Indeed, there were three values whose absolute standardized residuals exceeded 3 (values from observations 40, 166, and 170), indicating the potential presence of outliers.
+\item
+  In sum, the assumption of no influential points is likely violated, at least for three specific observations. These values should be closely examined in the substantive research context.
+\end{itemize}
+
+\subsubsection{Multiple regression analysis with one continuous variable and one categorical variable}\label{multiple-regression-analysis-with-one-continuous-variable-and-one-categorical-variable}
+
+\begin{itemize}
+\item
+  Say our goal is to predict the body mass of penguins using flipper length and sex through a multiple regression analysis.
+\item
+  We use female as a reference category (i.e., coded as 0), where male is coded as 1.
+\item
+  What would be the null hypothesis?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Quick data engineering}
+\NormalTok{dat\_penguin }\OtherTok{\textless{}{-}}\NormalTok{ dat\_penguin }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sex\_dummy =} \FunctionTok{if\_else}\NormalTok{(sex }\SpecialCharTok{==} \StringTok{"male"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
+
+\CommentTok{\# Multiple regression analysis}
+\NormalTok{model\_reg\_m\_2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ flipper\_length\_mm }\SpecialCharTok{+}\NormalTok{ sex\_dummy, }\AttributeTok{data =}\NormalTok{ dat\_penguin)}
+\FunctionTok{summary}\NormalTok{(model\_reg\_m\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass_g ~ flipper_length_mm + sex_dummy, data = dat_penguin)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -910.28 -243.89   -2.94  238.85 1067.73 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       -5410.300    285.798 -18.931  < 2e-16 ***
+## flipper_length_mm    46.982      1.441  32.598  < 2e-16 ***
+## sex_dummy           347.850     40.342   8.623 2.78e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 355.9 on 330 degrees of freedom
+##   (11 observations deleted due to missingness)
+## Multiple R-squared:  0.8058, Adjusted R-squared:  0.8047 
+## F-statistic: 684.8 on 2 and 330 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Can you understand the output and interpret the result?
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
