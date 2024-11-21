@@ -323,8 +323,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="regression-and-anova.html#cb108-1" tabindex="-1"></a><span class="co"># Clean the workspace</span></span>
 <span id="cb108-2"><a href="regression-and-anova.html#cb108-2" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>());<span class="fu">gc</span>()</span></code></pre></div>
 <pre><code>##           used (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
-## Ncells 1468454 78.5    2241401 119.8         NA  2241401 119.8
-## Vcells 2555545 19.5    8388608  64.0      16384  3700917  28.3</code></pre>
+## Ncells 1468454 78.5    2242207 119.8         NA  2242207 119.8
+## Vcells 2555551 19.5    8388608  64.0      16384  3708893  28.3</code></pre>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="regression-and-anova.html#cb110-1" tabindex="-1"></a><span class="co"># Set the working directory</span></span>
 <span id="cb110-2"><a href="regression-and-anova.html#cb110-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/ihnwhiheo/Github/PSY202A_Modeling&quot;</span>)</span>
 <span id="cb110-3"><a href="regression-and-anova.html#cb110-3" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
@@ -669,27 +669,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Fit: aov(formula = ACT ~ education, data = dat)
 ## 
-## Quantile = 2.8307
+## Quantile = 2.8304
 ## 95% family-wise confidence level
 ##  
 ## 
 ## Linear Hypotheses:
 ##            Estimate  lwr       upr      
-## 1 - 0 == 0  0.015205 -2.677683  2.708092
-## 2 - 0 == 0 -0.496411 -3.206346  2.213523
-## 3 - 0 == 0  0.820861 -1.144431  2.786153
-## 4 - 0 == 0  1.787185 -0.339005  3.913376
-## 5 - 0 == 0  2.129153  0.009584  4.248721
-## 2 - 1 == 0 -0.511616 -3.374635  2.351403
-## 3 - 1 == 0  0.805657 -1.365865  2.977179
-## 4 - 1 == 0  1.771981 -0.546170  4.090131
-## 5 - 1 == 0  2.113948 -0.198130  4.426026
-## 3 - 2 == 0  1.317273 -0.875353  3.509898
-## 4 - 2 == 0  2.283597 -0.054334  4.621528
-## 5 - 2 == 0  2.625564  0.293654  4.957474
-## 4 - 3 == 0  0.966324 -0.442416  2.375065
-## 5 - 3 == 0  1.308291 -0.090434  2.707017
-## 5 - 4 == 0  0.341967 -1.275051  1.958985</code></pre>
+## 1 - 0 == 0  0.015205 -2.677382  2.707791
+## 2 - 0 == 0 -0.496411 -3.206043  2.213220
+## 3 - 0 == 0  0.820861 -1.144211  2.785933
+## 4 - 0 == 0  1.787185 -0.338767  3.913138
+## 5 - 0 == 0  2.129153  0.009821  4.248484
+## 2 - 1 == 0 -0.511616 -3.374315  2.351083
+## 3 - 1 == 0  0.805657 -1.365622  2.976936
+## 4 - 1 == 0  1.771981 -0.545910  4.089872
+## 5 - 1 == 0  2.113948 -0.197871  4.425767
+## 3 - 2 == 0  1.317273 -0.875108  3.509653
+## 4 - 2 == 0  2.283597 -0.054072  4.621266
+## 5 - 2 == 0  2.625564  0.293915  4.957213
+## 4 - 3 == 0  0.966324 -0.442259  2.374907
+## 5 - 3 == 0  1.308291 -0.090278  2.706861
+## 5 - 4 == 0  0.341967 -1.274870  1.958804</code></pre>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="regression-and-anova.html#cb155-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">confint</span>(pairwise))</span></code></pre></div>
 <p><img src="PSY202A-Modeling-I.Heo_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <ul>
@@ -1288,7 +1288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb207-2"><a href="regression-and-anova.html#cb207-2" tabindex="-1"></a><span class="fu">plot</span>(model_reg_m_1, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="PSY202A-Modeling-I.Heo_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
 <ul>
-<li>The Q-Q plot shows that there is a slight deviation in the lower-left corner, but this is not severe and looks okay. Also, most of the data points hover around the normal line. Thus, the normality assumption is met.</li>
+<li>The Q-Q plot shows that there is a slight deviation in the upper-right corner, but this is not severe and looks okay. Also, most of the data points hover around the normal line. Thus, the normality assumption is met.</li>
 </ul>
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="regression-and-anova.html#cb208-1" tabindex="-1"></a><span class="co"># Model diagnostics using visual tools</span></span>
 <span id="cb208-2"><a href="regression-and-anova.html#cb208-2" tabindex="-1"></a><span class="fu">plot</span>(model_reg_m_1, <span class="at">which =</span> <span class="dv">3</span>)</span></code></pre></div>

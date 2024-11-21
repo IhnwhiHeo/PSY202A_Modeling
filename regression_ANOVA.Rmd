@@ -599,7 +599,7 @@ plot(model_reg_m_1, which = 1)
 plot(model_reg_m_1, which = 2)
 ```
 
-- The Q-Q plot shows that there is a slight deviation in the lower-left corner, but this is not severe and looks okay. Also, most of the data points hover around the normal line. Thus, the normality assumption is met.
+- The Q-Q plot shows that there is a slight deviation in the upper-right corner, but this is not severe and looks okay. Also, most of the data points hover around the normal line. Thus, the normality assumption is met.
 
 ```{r}
 # Model diagnostics using visual tools
