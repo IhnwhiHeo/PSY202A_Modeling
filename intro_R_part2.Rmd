@@ -97,8 +97,11 @@ library(tidyverse)
   - ...and more
 
 - Book recommended: R for Data Science
+
   - Freely available at https://r4ds.had.co.nz/
+  
 ![](./img/RforDS.png)
+
 
 ### Tidyverse basics
 

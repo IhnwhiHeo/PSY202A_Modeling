@@ -311,16 +311,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The easiest way to install packages and add packages to the base version of R is to use the Tools -&gt; Install Packages…</li>
 <li>Or use <code>insstall.packages()</code> function as follows:</li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="introduction-to-r-part-2.html#cb41-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;psych&quot;</span>)</span>
-<span id="cb41-2"><a href="introduction-to-r-part-2.html#cb41-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction-to-r-part-2.html#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;psych&quot;</span>)</span>
+<span id="cb1-2"><a href="introduction-to-r-part-2.html#cb1-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)</span></code></pre></div>
 </div>
 <div id="loading-packages" class="section level3 hasAnchor" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Loading packages<a href="introduction-to-r-part-2.html#loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>To access the package you have already installed, load it to the current R session using the function <code>library()</code>.</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introduction-to-r-part-2.html#cb42-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb42-2"><a href="introduction-to-r-part-2.html#cb42-2" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction-to-r-part-2.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb2-2"><a href="introduction-to-r-part-2.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code></pre></div>
 </div>
 </div>
 <div id="getting-help" class="section level2 hasAnchor" number="3.3">
@@ -344,22 +344,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>To access these files, you can click Help -&gt; R Help.</li>
 <li>Or just type:</li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="introduction-to-r-part-2.html#cb43-1" tabindex="-1"></a><span class="fu">help.start</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-r-part-2.html#cb3-1" tabindex="-1"></a><span class="fu">help.start</span>()</span></code></pre></div>
 <ul>
 <li>To request an R document for a special function, use “?”. To illustrate:</li>
 </ul>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="introduction-to-r-part-2.html#cb44-1" tabindex="-1"></a>?log</span>
-<span id="cb44-2"><a href="introduction-to-r-part-2.html#cb44-2" tabindex="-1"></a><span class="co"># This will pull up an Internet window with everything about the function log()</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-to-r-part-2.html#cb4-1" tabindex="-1"></a>?log</span>
+<span id="cb4-2"><a href="introduction-to-r-part-2.html#cb4-2" tabindex="-1"></a><span class="co"># This will pull up an Internet window with everything about the function log()</span></span></code></pre></div>
 <ul>
 <li>To request help by keywords, use “??”. To demonstrate:</li>
 </ul>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="introduction-to-r-part-2.html#cb45-1" tabindex="-1"></a>??logarithm</span>
-<span id="cb45-2"><a href="introduction-to-r-part-2.html#cb45-2" tabindex="-1"></a><span class="co"># This will give you an information window </span></span>
-<span id="cb45-3"><a href="introduction-to-r-part-2.html#cb45-3" tabindex="-1"></a><span class="co"># listing all the functions that contain the term &quot;logarithm&quot;.</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-to-r-part-2.html#cb5-1" tabindex="-1"></a>??logarithm</span>
+<span id="cb5-2"><a href="introduction-to-r-part-2.html#cb5-2" tabindex="-1"></a><span class="co"># This will give you an information window </span></span>
+<span id="cb5-3"><a href="introduction-to-r-part-2.html#cb5-3" tabindex="-1"></a><span class="co"># listing all the functions that contain the term &quot;logarithm&quot;.</span></span></code></pre></div>
 <ul>
 <li>To request help for a specific package, use <code>help(package = " ")</code>. That said:</li>
 </ul>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="introduction-to-r-part-2.html#cb46-1" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">&quot;psych&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-to-r-part-2.html#cb6-1" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">&quot;psych&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="tidyverse" class="section level2 hasAnchor" number="3.4">
@@ -370,10 +370,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Website: <a href="https://www.tidyverse.org/packages" class="uri">https://www.tidyverse.org/packages</a></li>
 <li>To install and load the tidyverse packages:</li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="introduction-to-r-part-2.html#cb47-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb47-2"><a href="introduction-to-r-part-2.html#cb47-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-r-part-2.html#cb7-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb7-2"><a href="introduction-to-r-part-2.html#cb7-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <ul>
-<li>Purpose is to make R code easier to work with:
+<li><p>Purpose is to make R code easier to work with:</p>
 <ul>
 <li>Data manipulation</li>
 <li>Data visualization</li>
@@ -381,21 +381,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Integration with other packages</li>
 <li>…and more</li>
 </ul></li>
-<li>Book recommended: R for Data Science
+<li><p>Book recommended: R for Data Science</p>
 <ul>
-<li>Freely available at <a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a>
-<img src="img/RforDS.png" /></li>
+<li>Freely available at <a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a></li>
 </ul></li>
 </ul>
+<p><img src="img/RforDS.png" /></p>
 <div id="tidyverse-basics" class="section level3 hasAnchor" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Tidyverse basics<a href="introduction-to-r-part-2.html#tidyverse-basics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>As it is difficult to change how fundamental base R structures/functions work, the tidyverse suite of packages creates and uses data structures, functions, and operators to make working with data more intuitive.</li>
 <li>The two most basic changes are in the use of pipes and tibbles.</li>
 </ul>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="introduction-to-r-part-2.html#cb48-1" tabindex="-1"></a><span class="co"># Packages for tidyverse demo</span></span>
-<span id="cb48-2"><a href="introduction-to-r-part-2.html#cb48-2" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
-<span id="cb48-3"><a href="introduction-to-r-part-2.html#cb48-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction-to-r-part-2.html#cb8-1" tabindex="-1"></a><span class="co"># Packages for tidyverse demo</span></span>
+<span id="cb8-2"><a href="introduction-to-r-part-2.html#cb8-2" tabindex="-1"></a><span class="fu">library</span>(datasets)</span>
+<span id="cb8-3"><a href="introduction-to-r-part-2.html#cb8-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
 <div id="pipes" class="section level3 hasAnchor" number="3.4.2">
 <h3><span class="header-section-number">3.4.2</span> Pipes<a href="introduction-to-r-part-2.html#pipes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -411,12 +411,12 @@ of using nested functions.</li>
 <ul>
 <li>Base R method of running more than one command</li>
 </ul>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introduction-to-r-part-2.html#cb49-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">83</span>)</span>
-<span id="cb49-2"><a href="introduction-to-r-part-2.html#cb49-2" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="dv">83</span>), <span class="at">digit =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-r-part-2.html#cb9-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">83</span>)</span>
+<span id="cb9-2"><a href="introduction-to-r-part-2.html#cb9-2" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="dv">83</span>), <span class="at">digit =</span> <span class="dv">2</span>)</span></code></pre></div>
 <ul>
 <li>Running more than one command with piping</li>
 </ul>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="introduction-to-r-part-2.html#cb50-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">83</span>) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="at">digit =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-r-part-2.html#cb10-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">83</span>) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="at">digit =</span> <span class="dv">2</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="tibbles" class="section level3 hasAnchor" number="3.4.3">
@@ -429,14 +429,14 @@ of using nested functions.</li>
 <li>In this section of code, the iris data frame is converted into a tibble. The iris dataset consists of five variables: <code>Sepal.Length</code>, <code>Sepal.Width</code>, <code>Petal.Length</code>, <code>Petal.Width</code>, and <code>Species</code>.</li>
 </ul>
 <p><img src="img/iris_data.png" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="introduction-to-r-part-2.html#cb51-1" tabindex="-1"></a><span class="co"># Loading the iris dataset from the datasets package</span></span>
-<span id="cb51-2"><a href="introduction-to-r-part-2.html#cb51-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;iris&quot;</span>)</span>
-<span id="cb51-3"><a href="introduction-to-r-part-2.html#cb51-3" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="introduction-to-r-part-2.html#cb51-4" tabindex="-1"></a><span class="co"># Converting the iris data.frame into a tibble object</span></span>
-<span id="cb51-5"><a href="introduction-to-r-part-2.html#cb51-5" tabindex="-1"></a>tibble_iris <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)</span>
-<span id="cb51-6"><a href="introduction-to-r-part-2.html#cb51-6" tabindex="-1"></a></span>
-<span id="cb51-7"><a href="introduction-to-r-part-2.html#cb51-7" tabindex="-1"></a><span class="co"># Using a data.frame as a tibble with a pipe operator</span></span>
-<span id="cb51-8"><a href="introduction-to-r-part-2.html#cb51-8" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-r-part-2.html#cb11-1" tabindex="-1"></a><span class="co"># Loading the iris dataset from the datasets package</span></span>
+<span id="cb11-2"><a href="introduction-to-r-part-2.html#cb11-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;iris&quot;</span>)</span>
+<span id="cb11-3"><a href="introduction-to-r-part-2.html#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="introduction-to-r-part-2.html#cb11-4" tabindex="-1"></a><span class="co"># Converting the iris data.frame into a tibble object</span></span>
+<span id="cb11-5"><a href="introduction-to-r-part-2.html#cb11-5" tabindex="-1"></a>tibble_iris <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)</span>
+<span id="cb11-6"><a href="introduction-to-r-part-2.html#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="introduction-to-r-part-2.html#cb11-7" tabindex="-1"></a><span class="co"># Using a data.frame as a tibble with a pipe operator</span></span>
+<span id="cb11-8"><a href="introduction-to-r-part-2.html#cb11-8" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span></code></pre></div>
 </div>
 <div id="differences-between-tibbles-and-data.frames" class="section level3 hasAnchor" number="3.4.4">
 <h3><span class="header-section-number">3.4.4</span> Differences between tibbles and data.frames<a href="introduction-to-r-part-2.html#differences-between-tibbles-and-data.frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -448,20 +448,20 @@ of using nested functions.</li>
 <ul>
 <li>A nice feature of a tibble is that when printing a variable to screen, it will show only the first 10 rows and the columns that fit to the screen by default.</li>
 </ul>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="introduction-to-r-part-2.html#cb52-1" tabindex="-1"></a><span class="co"># Default printing of data.frame</span></span>
-<span id="cb52-2"><a href="introduction-to-r-part-2.html#cb52-2" tabindex="-1"></a>iris <span class="co"># Prints 150 rows</span></span>
-<span id="cb52-3"><a href="introduction-to-r-part-2.html#cb52-3" tabindex="-1"></a></span>
-<span id="cb52-4"><a href="introduction-to-r-part-2.html#cb52-4" tabindex="-1"></a><span class="co"># Default printing of tibble</span></span>
-<span id="cb52-5"><a href="introduction-to-r-part-2.html#cb52-5" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb52-6"><a href="introduction-to-r-part-2.html#cb52-6" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="co"># Prints 10 row</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-r-part-2.html#cb12-1" tabindex="-1"></a><span class="co"># Default printing of data.frame</span></span>
+<span id="cb12-2"><a href="introduction-to-r-part-2.html#cb12-2" tabindex="-1"></a>iris <span class="co"># Prints 150 rows</span></span>
+<span id="cb12-3"><a href="introduction-to-r-part-2.html#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="introduction-to-r-part-2.html#cb12-4" tabindex="-1"></a><span class="co"># Default printing of tibble</span></span>
+<span id="cb12-5"><a href="introduction-to-r-part-2.html#cb12-5" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="introduction-to-r-part-2.html#cb12-6" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="co"># Prints 10 row</span></span></code></pre></div>
 <ul>
 <li>This is nice since you don’t have to specify head() to take a quick look at your dataset.</li>
 <li>If it is desirable to view more of the dataset, the print() function can change the number of rows or columns displayed.</li>
 </ul>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introduction-to-r-part-2.html#cb53-1" tabindex="-1"></a><span class="co"># Printing of tibble with print() - change defaults</span></span>
-<span id="cb53-2"><a href="introduction-to-r-part-2.html#cb53-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb53-3"><a href="introduction-to-r-part-2.html#cb53-3" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb53-4"><a href="introduction-to-r-part-2.html#cb53-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">width =</span> <span class="cn">Inf</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introduction-to-r-part-2.html#cb13-1" tabindex="-1"></a><span class="co"># Printing of tibble with print() - change defaults</span></span>
+<span id="cb13-2"><a href="introduction-to-r-part-2.html#cb13-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="introduction-to-r-part-2.html#cb13-3" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="introduction-to-r-part-2.html#cb13-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">width =</span> <span class="cn">Inf</span>)</span></code></pre></div>
 </div>
 <div id="subsetting" class="section level4 hasAnchor" number="3.4.4.2">
 <h4><span class="header-section-number">3.4.4.2</span> Subsetting<a href="introduction-to-r-part-2.html#subsetting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -469,13 +469,13 @@ of using nested functions.</li>
 <li>When subsetting base R data.frames the default behavior is to simplify the output to the simplest data structure (i.e., a vector).</li>
 <li>If you use piping to subset a data frame, then the notation is slightly different from base R, requiring a placeholder <code>.</code> prior to the <code>[ ]</code> or <code>$</code>.</li>
 </ul>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="introduction-to-r-part-2.html#cb54-1" tabindex="-1"></a><span class="co"># Subsetting the Species variable in base R</span></span>
-<span id="cb54-2"><a href="introduction-to-r-part-2.html#cb54-2" tabindex="-1"></a>iris<span class="sc">$</span>Species</span>
-<span id="cb54-3"><a href="introduction-to-r-part-2.html#cb54-3" tabindex="-1"></a>iris[ ,<span class="st">&quot;Species&quot;</span>]</span>
-<span id="cb54-4"><a href="introduction-to-r-part-2.html#cb54-4" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="introduction-to-r-part-2.html#cb54-5" tabindex="-1"></a><span class="co"># Subsetting the Species variable in output using a pipe</span></span>
-<span id="cb54-6"><a href="introduction-to-r-part-2.html#cb54-6" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> .<span class="sc">$</span>Species</span>
-<span id="cb54-7"><a href="introduction-to-r-part-2.html#cb54-7" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> .[ ,<span class="st">&quot;Species&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction-to-r-part-2.html#cb14-1" tabindex="-1"></a><span class="co"># Subsetting the Species variable in base R</span></span>
+<span id="cb14-2"><a href="introduction-to-r-part-2.html#cb14-2" tabindex="-1"></a>iris<span class="sc">$</span>Species</span>
+<span id="cb14-3"><a href="introduction-to-r-part-2.html#cb14-3" tabindex="-1"></a>iris[ ,<span class="st">&quot;Species&quot;</span>]</span>
+<span id="cb14-4"><a href="introduction-to-r-part-2.html#cb14-4" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="introduction-to-r-part-2.html#cb14-5" tabindex="-1"></a><span class="co"># Subsetting the Species variable in output using a pipe</span></span>
+<span id="cb14-6"><a href="introduction-to-r-part-2.html#cb14-6" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> .<span class="sc">$</span>Species</span>
+<span id="cb14-7"><a href="introduction-to-r-part-2.html#cb14-7" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> .[ ,<span class="st">&quot;Species&quot;</span>]</span></code></pre></div>
 <ul>
 <li>Note that some older functions do not work with tibbles, so if you need to convert a tibble to a data.frame, the function as.data.frame(name_of_tibble) will easily convert it.</li>
 </ul>
@@ -503,17 +503,17 @@ of using nested functions.</li>
 </ul></li>
 <li><p>Here is an example of the <code>select()</code>, <code>filter()</code>, and <code>summarise()</code> functions using the iris dataset.</p></li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introduction-to-r-part-2.html#cb55-1" tabindex="-1"></a><span class="co"># Only select the columns related to the Sepal of the iris</span></span>
-<span id="cb55-2"><a href="introduction-to-r-part-2.html#cb55-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb55-3"><a href="introduction-to-r-part-2.html#cb55-3" tabindex="-1"></a>  <span class="fu">select</span>(Sepal.Length,Sepal.Width) <span class="sc">%&gt;%</span></span>
-<span id="cb55-4"><a href="introduction-to-r-part-2.html#cb55-4" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="introduction-to-r-part-2.html#cb56-1" tabindex="-1"></a><span class="co">#F ilter for irises with a Sepal.Length greater than 5 and Sepal.Width greater than 4</span></span>
-<span id="cb56-2"><a href="introduction-to-r-part-2.html#cb56-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb56-3"><a href="introduction-to-r-part-2.html#cb56-3" tabindex="-1"></a>  <span class="fu">filter</span>(Sepal.Length <span class="sc">&gt;</span> <span class="dv">5</span>, Sepal.Width <span class="sc">&gt;</span> <span class="dv">4</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="introduction-to-r-part-2.html#cb57-1" tabindex="-1"></a><span class="co"># Calculate the average Sepal.Length and Sepal.Width for each iris Species</span></span>
-<span id="cb57-2"><a href="introduction-to-r-part-2.html#cb57-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb57-3"><a href="introduction-to-r-part-2.html#cb57-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
-<span id="cb57-4"><a href="introduction-to-r-part-2.html#cb57-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean.Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length), <span class="at">mean.Sepal.width =</span> <span class="fu">mean</span>(Sepal.Width))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-to-r-part-2.html#cb15-1" tabindex="-1"></a><span class="co"># Only select the columns related to the Sepal of the iris</span></span>
+<span id="cb15-2"><a href="introduction-to-r-part-2.html#cb15-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="introduction-to-r-part-2.html#cb15-3" tabindex="-1"></a>  <span class="fu">select</span>(Sepal.Length,Sepal.Width) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="introduction-to-r-part-2.html#cb15-4" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-r-part-2.html#cb16-1" tabindex="-1"></a><span class="co">#F ilter for irises with a Sepal.Length greater than 5 and Sepal.Width greater than 4</span></span>
+<span id="cb16-2"><a href="introduction-to-r-part-2.html#cb16-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="introduction-to-r-part-2.html#cb16-3" tabindex="-1"></a>  <span class="fu">filter</span>(Sepal.Length <span class="sc">&gt;</span> <span class="dv">5</span>, Sepal.Width <span class="sc">&gt;</span> <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introduction-to-r-part-2.html#cb17-1" tabindex="-1"></a><span class="co"># Calculate the average Sepal.Length and Sepal.Width for each iris Species</span></span>
+<span id="cb17-2"><a href="introduction-to-r-part-2.html#cb17-2" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="introduction-to-r-part-2.html#cb17-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="introduction-to-r-part-2.html#cb17-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean.Sepal.Length =</span> <span class="fu">mean</span>(Sepal.Length), <span class="at">mean.Sepal.width =</span> <span class="fu">mean</span>(Sepal.Width))</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -623,20 +623,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
